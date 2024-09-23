@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web", "src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj", "{9C889D6C-7C67-4216-A38E-BB98BB687347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Client", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Client\CalmbinoArchive.Web.Client.csproj", "{B095C3FB-4FFE-40DB-923D-C59D5C433302}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Api", "src\CalmbinoArchive.Api\CalmbinoArchive.Api.csproj", "{0A7B8C63-6046-42AD-A023-DDACEC7DF5F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C889D6C-7C67-4216-A38E-BB98BB687347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C889D6C-7C67-4216-A38E-BB98BB687347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C889D6C-7C67-4216-A38E-BB98BB687347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C889D6C-7C67-4216-A38E-BB98BB687347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B095C3FB-4FFE-40DB-923D-C59D5C433302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B095C3FB-4FFE-40DB-923D-C59D5C433302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B095C3FB-4FFE-40DB-923D-C59D5C433302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B095C3FB-4FFE-40DB-923D-C59D5C433302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A7B8C63-6046-42AD-A023-DDACEC7DF5F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7B8C63-6046-42AD-A023-DDACEC7DF5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7B8C63-6046-42AD-A023-DDACEC7DF5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7B8C63-6046-42AD-A023-DDACEC7DF5F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
