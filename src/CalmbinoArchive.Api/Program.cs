@@ -2,6 +2,16 @@ using CalmbinoArchive.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7269",
+                "http://localhost:5036").AllowAnyHeader().AllowAnyMethod();
+        });
+});
+
 // Add application layer
 builder.Services.AddApplication();
 
@@ -25,5 +35,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
 
 app.Run();

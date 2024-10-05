@@ -1,3 +1,4 @@
+using CalmbinoArchive.Web.Shared.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CalmbinoArchive.Web.Shared;
@@ -8,6 +9,8 @@ public static class DependencyInjection
     {
         services.AddHttpClient("CalmbinoArchiveAPI",
             client => client.BaseAddress = new Uri("https://localhost:7234"));
+
+        services.AddScoped<WeatherForecastService>();
 
         return services;
     }

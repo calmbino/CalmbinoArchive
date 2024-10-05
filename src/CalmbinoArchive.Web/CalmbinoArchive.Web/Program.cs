@@ -1,5 +1,4 @@
 using CalmbinoArchive.Application;
-using CalmbinoArchive.Infrastructure;
 using CalmbinoArchive.Web.Components;
 using CalmbinoArchive.Web.Shared;
 using MudBlazor.Services;
@@ -9,8 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add application layer
 builder.Services.AddApplication();
-// Add infrastructure layer
-builder.Services.AddInfrastructure();
 // Add Shared for Blazor
 builder.Services.AddWebShared();
 
