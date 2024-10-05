@@ -1,0 +1,8 @@
+﻿services:
+  calmbinoarchive.api:
+    image: calmbinoarchive.api
+    build:
+      context: .
+      dockerfile: src/CalmbinoArchive.Api/Dockerfile
+    ports:
+      - "8080:8080"

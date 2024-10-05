@@ -16,6 +16,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Persistence
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Shared", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj", "{31538C87-66E1-40BA-AA21-EC46321EB9D6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9783ACB-8B42-48D5-BE27-8EA18B7EE0D2}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
