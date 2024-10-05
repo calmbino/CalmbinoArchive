@@ -1,8 +1,27 @@
 ﻿services:
-  calmbinoarchive.api:
-    image: calmbinoarchive.api
-    build:
-      context: .
-      dockerfile: src/CalmbinoArchive.Api/Dockerfile
+  #  calmbino-api:
+  #    container_name: calmbino-api
+  #    image: calmbino_api
+  #    build:
+  #      context: .
+  #      dockerfile: src/CalmbinoArchive.Api/Dockerfile
+  #    ports:
+  #      - "8080:8080"
+  
+  calmbino-db:
+    container_name: calmbino-db
+    image: bitnami/postgresql:17
     ports:
-      - "8080:8080"
+      - 5432:5432
+    volumes:
+      - calmbino-db-data:/bitnami/postgresql
+    environment:
+      - POSTGRESQL_PASSWORD=calmbino
+      - POSTGRESQL_USERNAME=calmbino
+      - POSTGRESQL_DATABASE=calmbino
+
+volumes:
+  calmbino-db-data:
+    driver: local
+  
+  
