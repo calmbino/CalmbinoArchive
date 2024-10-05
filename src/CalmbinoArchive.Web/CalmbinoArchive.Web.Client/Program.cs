@@ -1,4 +1,4 @@
-using CalmbinoArchive.Application;
+using CalmbinoArchive.Application.Extentions;
 using CalmbinoArchive.Web.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;

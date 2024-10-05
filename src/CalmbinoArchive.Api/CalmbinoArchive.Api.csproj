@@ -12,6 +12,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj"/>
+        <ProjectReference Include="..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
+        <ProjectReference Include="..\CalmbinoArchive.Persistence\CalmbinoArchive.Persistence.csproj"/>
     </ItemGroup>
 
 </Project>

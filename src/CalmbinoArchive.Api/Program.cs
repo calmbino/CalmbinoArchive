@@ -1,4 +1,6 @@
-using CalmbinoArchive.Application;
+using CalmbinoArchive.Application.Extentions;
+using CalmbinoArchive.Infrastructure.Extensions;
+using CalmbinoArchive.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +14,16 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Add infrastructure layer
+builder.Services.AddInfrastructure(builder.Configuration);
+// Add persistence layer
+builder.Services.AddPersistence(builder.Configuration);
 // Add application layer
 builder.Services.AddApplication();
 
 // Add services to the container.
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
