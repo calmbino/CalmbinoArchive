@@ -15,6 +15,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
+        <ProjectReference Include="..\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj"/>
     </ItemGroup>
 
 </Project>
