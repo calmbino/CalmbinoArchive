@@ -1,5 +1,6 @@
 using CalmbinoArchive.Application.Extentions;
 using CalmbinoArchive.Infrastructure.Extensions;
+using CalmbinoArchive.Persistence;
 using CalmbinoArchive.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    if (await dbContext.Database.CanConnectAsync())
+        Console.WriteLine("Database connection established");
+    else
+        Console.WriteLine("Database connection failed");
+}
 
 Console.WriteLine($"Current Environment >>> {app.Environment.EnvironmentName}");
 
