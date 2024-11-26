@@ -1,23 +1,40 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+@* Required *@
+<MudThemeProvider />
+<MudPopoverProvider />
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+@* Needed for dialogs *@
+<MudDialogProvider />
+
+@* Needed for snackbars *@
+<MudSnackbarProvider />
+
+<MudThemeProvider IsDarkMode="@_isDarkMode"/>
+<MudLayout>
+    <MudAppBar Elevation="5">
+        <MudText Style="white-space: nowrap;" Typo="Typo.h5" Class="ml-1">Calmbino's Archive</MudText>
+        <MudSpacer/>
+        <MudContainer Class="d-flex flex-row flex-grow-1 gap-4">
+            <MudLink Typo="Typo.button" Href="/" Color="Color.Inherit">Home</MudLink>
+            <MudLink Typo="Typo.button" Href="/posts" Color="Color.Inherit">Post</MudLink>
+            <MudLink Typo="Typo.button" Href="/weather" Color="Color.Inherit">Weather</MudLink>
+        </MudContainer>
+        <MudSpacer/>
+        <MudSpacer/>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
+    </MudAppBar>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+
+    private readonly bool _isDarkMode = true;
+
+}
