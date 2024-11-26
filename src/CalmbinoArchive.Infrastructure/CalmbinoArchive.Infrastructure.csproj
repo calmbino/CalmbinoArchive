@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj" />
+    </ItemGroup>
+
 </Project>

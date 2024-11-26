@@ -7,11 +7,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.csproj", "src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web/"]
-COPY ["src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/CalmbinoArchive.Web.Client.csproj", "src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/"]
-RUN dotnet restore "src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.csproj"
+COPY ["src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.csproj", "src/CalmbinoArchive.Web/CalmbinoArchive.Web/"]
+COPY ["src/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/CalmbinoArchive.Web.Client.csproj", "src/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/"]
+RUN dotnet restore "src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.csproj"
 COPY . .
-WORKDIR "/src/src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web"
+WORKDIR "/src/src/CalmbinoArchive.Web/CalmbinoArchive.Web"
 RUN dotnet build "CalmbinoArchive.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

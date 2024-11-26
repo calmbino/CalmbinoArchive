@@ -8,11 +8,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Infrastructure", "src\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj", "{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web", "src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj", "{79E8A0D5-E25E-4ED2-BE54-7993202485A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web", "src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj", "{377F5469-74E3-459A-8D82-400CD986817E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Client", "src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.Client\CalmbinoArchive.Web.Client.csproj", "{06E49496-0600-4E24-BFD3-27C598C74D61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Client", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Client\CalmbinoArchive.Web.Client.csproj", "{691DD1FF-E19A-4313-BD9F-63EDA046B25D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Shared", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj", "{6DFD9B92-8792-4068-8D76-9C88D4E231A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Shared", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj", "{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,17 +36,17 @@ Global
 		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06E49496-0600-4E24-BFD3-27C598C74D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06E49496-0600-4E24-BFD3-27C598C74D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06E49496-0600-4E24-BFD3-27C598C74D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06E49496-0600-4E24-BFD3-27C598C74D61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377F5469-74E3-459A-8D82-400CD986817E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377F5469-74E3-459A-8D82-400CD986817E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377F5469-74E3-459A-8D82-400CD986817E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377F5469-74E3-459A-8D82-400CD986817E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{691DD1FF-E19A-4313-BD9F-63EDA046B25D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691DD1FF-E19A-4313-BD9F-63EDA046B25D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691DD1FF-E19A-4313-BD9F-63EDA046B25D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691DD1FF-E19A-4313-BD9F-63EDA046B25D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -14,9 +14,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
+      <Content Include="..\..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,10 +7,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/CalmbinoArchive.Web.Client.csproj", "src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/"]
-RUN dotnet restore "src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/CalmbinoArchive.Web.Client.csproj"
+COPY ["src/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/CalmbinoArchive.Web.Client.csproj", "src/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/"]
+RUN dotnet restore "src/CalmbinoArchive.Web/CalmbinoArchive.Web.Client/CalmbinoArchive.Web.Client.csproj"
 COPY . .
-WORKDIR "/src/src/CalmbinoArchive.Web/CalmbinoArchive.Web/CalmbinoArchive.Web.Client"
+WORKDIR "/src/src/CalmbinoArchive.Web/CalmbinoArchive.Web.Client"
 RUN dotnet build "CalmbinoArchive.Web.Client.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
