@@ -1,4 +1,4 @@
-namespace CalmbinoArchive.Domain.Entities;
+namespace CalmbinoArchive.Api;
 
 public class WeatherForecast
 {
