@@ -2,6 +2,18 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Api", "src\CalmbinoArchive.Api\CalmbinoArchive.Api.csproj", "{D7624069-5F3F-4C85-B79E-6BFD24E82D87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Domain", "src\CalmbinoArchive.Domain\CalmbinoArchive.Domain.csproj", "{31393B01-260A-487F-AF57-D17C813AAD21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Application", "src\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj", "{860F1562-2A00-4F74-86E6-5F34438A1443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Infrastructure", "src\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj", "{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web", "src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj", "{79E8A0D5-E25E-4ED2-BE54-7993202485A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Client", "src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.Client\CalmbinoArchive.Web.Client.csproj", "{06E49496-0600-4E24-BFD3-27C598C74D61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Shared", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj", "{6DFD9B92-8792-4068-8D76-9C88D4E231A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +24,29 @@ Global
 		{D7624069-5F3F-4C85-B79E-6BFD24E82D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7624069-5F3F-4C85-B79E-6BFD24E82D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7624069-5F3F-4C85-B79E-6BFD24E82D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31393B01-260A-487F-AF57-D17C813AAD21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31393B01-260A-487F-AF57-D17C813AAD21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31393B01-260A-487F-AF57-D17C813AAD21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31393B01-260A-487F-AF57-D17C813AAD21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860F1562-2A00-4F74-86E6-5F34438A1443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860F1562-2A00-4F74-86E6-5F34438A1443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860F1562-2A00-4F74-86E6-5F34438A1443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860F1562-2A00-4F74-86E6-5F34438A1443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B96AC9C0-2D1A-4BCA-9FA5-798CD9F2A414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E8A0D5-E25E-4ED2-BE54-7993202485A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06E49496-0600-4E24-BFD3-27C598C74D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06E49496-0600-4E24-BFD3-27C598C74D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06E49496-0600-4E24-BFD3-27C598C74D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06E49496-0600-4E24-BFD3-27C598C74D61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DFD9B92-8792-4068-8D76-9C88D4E231A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
