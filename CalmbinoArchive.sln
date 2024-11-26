@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Client"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.Web.Shared", "src\CalmbinoArchive.Web\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj", "{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.AppHost", "src\CalmbinoArchive.AppHost\CalmbinoArchive.AppHost.csproj", "{5758091C-1963-4806-A79D-C10435663976}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalmbinoArchive.ServiceDefaults", "src\CalmbinoArchive.ServiceDefaults\CalmbinoArchive.ServiceDefaults.csproj", "{1AC06C5C-4219-4B2E-9B18-45CE540AB539}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +52,13 @@ Global
 		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54A8FCBF-0DC2-4ECF-BC52-281EEA5158AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5758091C-1963-4806-A79D-C10435663976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5758091C-1963-4806-A79D-C10435663976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5758091C-1963-4806-A79D-C10435663976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5758091C-1963-4806-A79D-C10435663976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC06C5C-4219-4B2E-9B18-45CE540AB539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC06C5C-4219-4B2E-9B18-45CE540AB539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC06C5C-4219-4B2E-9B18-45CE540AB539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC06C5C-4219-4B2E-9B18-45CE540AB539}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
