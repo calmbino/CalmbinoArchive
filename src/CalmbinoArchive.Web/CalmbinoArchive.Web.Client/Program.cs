@@ -4,9 +4,6 @@ using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-// Add MudBlazor Services
-builder.Services.AddMudServices();
-
 // Add services to the container.
 builder.Services.AddWebShared();
 
