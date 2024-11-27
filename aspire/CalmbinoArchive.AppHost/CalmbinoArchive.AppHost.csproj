@@ -16,8 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CalmbinoArchive.Api\CalmbinoArchive.Api.csproj" />
-      <ProjectReference Include="..\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj" />
+        <ProjectReference Include="..\..\src\CalmbinoArchive.Api\CalmbinoArchive.Api.csproj"/>
+        <ProjectReference Include="..\..\src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj"/>
     </ItemGroup>
 
 </Project>

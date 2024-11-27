@@ -1,5 +1,6 @@
 using CalmbinoArchive.Application.Extensions;
 using CalmbinoArchive.Infrastructure.Extensions;
+using CalmbinoArchive.ServiceDefaults;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -9,19 +9,19 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="1.2.44" />
+        <PackageReference Include="Scalar.AspNetCore" Version="1.2.44"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj" />
-      <ProjectReference Include="..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj" />
-      <ProjectReference Include="..\CalmbinoArchive.ServiceDefaults\CalmbinoArchive.ServiceDefaults.csproj" />
+        <ProjectReference Include="..\..\aspire\CalmbinoArchive.ServiceDefaults\CalmbinoArchive.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj"/>
+        <ProjectReference Include="..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>
