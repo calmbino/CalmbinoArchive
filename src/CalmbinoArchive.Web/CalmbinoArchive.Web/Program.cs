@@ -1,5 +1,8 @@
+using CalmbinoArchive.Application.Extensions;
+using CalmbinoArchive.Infrastructure.Extensions;
 using CalmbinoArchive.Web.Client.Pages;
 using CalmbinoArchive.Web.Components;
+using CalmbinoArchive.Web.Shared.Extensions;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,13 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add aspire services
 builder.AddServiceDefaults();
 
-// Add MudBlazor services
-builder.Services.AddMudServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
+builder.Services.AddMudServices();
+builder.Services.AddWebShared()
+       .AddApplication()
+       .AddInfrastructure(builder.Configuration);
+
 
 var app = builder.Build();
 
