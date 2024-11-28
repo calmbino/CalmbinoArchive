@@ -1,3 +1,4 @@
+using CalmbinoArchive.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalmbinoArchive.Api.Controllers;

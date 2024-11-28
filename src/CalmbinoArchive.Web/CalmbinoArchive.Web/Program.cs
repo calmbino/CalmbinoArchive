@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add aspire services
 builder.AddServiceDefaults();
 
-
 // Add services to the container.
 builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()

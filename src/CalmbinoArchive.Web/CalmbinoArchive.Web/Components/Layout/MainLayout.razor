@@ -1,17 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-
-
-@* Required *@
-<MudThemeProvider />
-<MudPopoverProvider />
-
-@* Needed for dialogs *@
-<MudDialogProvider />
-
-@* Needed for snackbars *@
-<MudSnackbarProvider />
-
 <MudThemeProvider IsDarkMode="@_isDarkMode"/>
 <MudLayout>
     <MudAppBar Elevation="5">
@@ -19,7 +7,7 @@
         <MudSpacer/>
         <MudContainer Class="d-flex flex-row flex-grow-1 gap-4">
             <MudLink Typo="Typo.button" Href="/" Color="Color.Inherit">Home</MudLink>
-            <MudLink Typo="Typo.button" Href="/posts" Color="Color.Inherit">Post</MudLink>
+            <MudLink Typo="Typo.button" Href="/weather2" Color="Color.Inherit">Post</MudLink>
             <MudLink Typo="Typo.button" Href="/weather" Color="Color.Inherit">Weather</MudLink>
         </MudContainer>
         <MudSpacer/>
