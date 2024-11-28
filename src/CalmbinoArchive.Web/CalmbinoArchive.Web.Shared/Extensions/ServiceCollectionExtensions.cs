@@ -11,22 +11,10 @@ public static class ServiceCollectionExtensions
         // Add MudBlazor Services
         services.AddMudServices();
 
-        try
-        {
-            // Add Http Client
-            // services.ConfigureHttpClientDefaults(static http => { http.AddServiceDiscovery(); });
-            services.AddHttpClient("CalmbinoArchive-Api",
-                static client => client.BaseAddress = new Uri("https://localhost:7245"));
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-
-        // Dependency Injection
+        // TODO: Find ways to leverage Aspire's Service Discovery
         services.AddScoped<WeatherForecastService>();
+        services.AddHttpClient<WeatherForecastService>(
+            static client => client.BaseAddress = new Uri("https://localhost:7245"));
 
 
         return services;

@@ -6,11 +6,12 @@
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 @inject WeatherForecastService WeatherForecastService
 
+<MudPopoverProvider/>
 
 <PageTitle>Weather</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
-<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+<MudText Class="mb-8">@RendererInfo.Name</MudText>
 
 @if (_forecasts == null)
 {

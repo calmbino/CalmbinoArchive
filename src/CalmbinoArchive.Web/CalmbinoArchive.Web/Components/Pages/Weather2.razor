@@ -8,6 +8,11 @@
 
 <MudPopoverProvider/>
 
+<PageTitle>Weather2</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
+<MudText Class="mb-8">@RendererInfo.Name</MudText>
+
 @if (_forecasts == null)
 {
     <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7"/>

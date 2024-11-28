@@ -4,17 +4,17 @@ using CalmbinoArchive.Domain.Entities;
 
 namespace CalmbinoArchive.Web.Shared.Services;
 
-public class WeatherForecastService
+public class WeatherForecastService(HttpClient httpClient)
 {
-    private readonly HttpClient _httpClient;
+    // private readonly HttpClient _httpClient;
 
-    public WeatherForecastService(IHttpClientFactory httpClientFactory)
-    {
-        _httpClient = httpClientFactory.CreateClient("CalmbinoArchive-Api");
-    }
+    // public WeatherForecastService(IHttpClientFactory httpClientFactory)
+    // {
+    //     _httpClient = httpClientFactory.CreateClient("CalmbinoArchive-Api");
+    // }
 
     public async Task<WeatherForecast[]> GetDatasAsync()
     {
-        return await _httpClient.GetFromJsonAsync<WeatherForecast[]>("/api/WeatherForecast") ?? [];
+        return await httpClient.GetFromJsonAsync<WeatherForecast[]>("/api/WeatherForecast") ?? [];
     }
 }
