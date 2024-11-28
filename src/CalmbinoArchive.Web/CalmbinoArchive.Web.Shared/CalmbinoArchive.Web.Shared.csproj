@@ -11,4 +11,9 @@
         <PackageReference Include="MudBlazor" Version="8.0.0-preview.5"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj"/>
+        <ProjectReference Include="..\..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
+    </ItemGroup>
+
 </Project>

@@ -1,3 +1,4 @@
+using CalmbinoArchive.Web.Shared.Services;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 
@@ -9,6 +10,13 @@ public static class ServiceCollectionExtensions
     {
         // Add MudBlazor Services
         services.AddMudServices();
+
+        // Add Http Client
+        services.AddHttpClient("CalmbinoAPI", client => client.BaseAddress = new Uri("api"));
+
+        // Dependency Injection
+        services.AddScoped<WeatherForecastService>();
+
 
         return services;
     }

@@ -9,8 +9,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\aspire\CalmbinoArchive.ServiceDefaults\CalmbinoArchive.ServiceDefaults.csproj"/>
-        <ProjectReference Include="..\..\CalmbinoArchive.Application\CalmbinoArchive.Application.csproj"/>
-        <ProjectReference Include="..\..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
         <ProjectReference Include="..\CalmbinoArchive.Web.Client\CalmbinoArchive.Web.Client.csproj"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0"/>
     </ItemGroup>
