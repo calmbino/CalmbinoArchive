@@ -4,7 +4,7 @@
 @page "/weather"
 
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
-@inject WeatherForecastService WeatherForecastService
+@inject WeatherClientService WeatherClientService
 
 <MudPopoverProvider/>
 
@@ -56,7 +56,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await WeatherForecastService.GetDatasAsync();
+        _forecasts = await WeatherClientService.GetDatasAsync();
     }
 
 }

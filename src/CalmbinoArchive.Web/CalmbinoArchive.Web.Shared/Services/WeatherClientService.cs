@@ -4,15 +4,8 @@ using CalmbinoArchive.Domain.Entities;
 
 namespace CalmbinoArchive.Web.Shared.Services;
 
-public class WeatherForecastService(HttpClient httpClient)
+public class WeatherClientService(HttpClient httpClient)
 {
-    // private readonly HttpClient _httpClient;
-
-    // public WeatherForecastService(IHttpClientFactory httpClientFactory)
-    // {
-    //     _httpClient = httpClientFactory.CreateClient("CalmbinoArchive-Api");
-    // }
-
     public async Task<WeatherForecast[]> GetDatasAsync()
     {
         return await httpClient.GetFromJsonAsync<WeatherForecast[]>("/api/WeatherForecast") ?? [];

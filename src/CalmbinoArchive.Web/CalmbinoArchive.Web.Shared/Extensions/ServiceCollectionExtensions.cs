@@ -12,10 +12,9 @@ public static class ServiceCollectionExtensions
         services.AddMudServices();
 
         // TODO: Find ways to leverage Aspire's Service Discovery
-        services.AddScoped<WeatherForecastService>();
-        services.AddHttpClient<WeatherForecastService>(
+        services.AddScoped<WeatherClientService>();
+        services.AddHttpClient<WeatherClientService>(
             static client => client.BaseAddress = new Uri("https://localhost:7245"));
-
 
         return services;
     }

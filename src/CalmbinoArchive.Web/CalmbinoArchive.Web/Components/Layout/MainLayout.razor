@@ -2,27 +2,29 @@
 
 <MudThemeProvider IsDarkMode="@_isDarkMode"/>
 <MudLayout>
-    <MudAppBar Elevation="5">
-        <MudText Style="white-space: nowrap;" Typo="Typo.h5" Class="ml-1">Calmbino's Archive</MudText>
-        <MudSpacer/>
-        <MudContainer Class="d-flex flex-row flex-grow-1 gap-4">
-            <MudLink Typo="Typo.button" Href="/" Color="Color.Inherit">Home</MudLink>
-            <MudLink Typo="Typo.button" Href="/weather2" Color="Color.Inherit">Post</MudLink>
-            <MudLink Typo="Typo.button" Href="/weather" Color="Color.Inherit">Weather</MudLink>
-        </MudContainer>
-        <MudSpacer/>
-        <MudSpacer/>
-        <MudSpacer/>
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
+    @* Header *@
+    <MudAppBar Fixed="true" Dense="false" Elevation="4">
+        <div Class="d-flex justify-space-between flex-grow-1 px-5">
+            <MudStack Row="true">
+                <MudLink Href="/" Typo="Typo.h5" Color="Color.Inherit"
+                         Underline="Underline.None">
+                    Calmbino's Archive
+                </MudLink>
+            </MudStack>
+            <MudStack Row="true">
+                <MudLink Href="/Weather" Typo="Typo.h6" Color="Color.Inherit" Underline="Underline.None">About</MudLink>
+                <MudLink Href="/posts" Typo="Typo.h6" Color="Color.Inherit" Underline="Underline.None">Post</MudLink>
+            </MudStack>
+        </div>
     </MudAppBar>
+
+    @* Body *@
     <MudMainContent>
         @Body
     </MudMainContent>
 </MudLayout>
 
 @code {
-
-
     private readonly bool _isDarkMode = true;
 
 }
