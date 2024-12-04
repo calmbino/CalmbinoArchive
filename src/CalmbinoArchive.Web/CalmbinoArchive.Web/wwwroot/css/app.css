@@ -1,0 +1,47 @@
+hr {
+    display: block;
+    visibility: visible;
+    height: auto;
+    margin: 1em 0;
+    border: 1px solid #ccc;
+}
+
+/*.mud-markdown-body p {*/
+/*    white-space: pre-line;*/
+/*}*/
+
+.mud-markdown-body h1 {
+    font-size: 1.875em;
+}
+
+.mud-markdown-body code {
+    font-family: monospace;
+}
+
+.mud-markdown-body pre code {
+    display: block; /* Ensures it takes up the full width available */
+    padding: 0.8em !important;
+    margin: 1em auto;
+    overflow-x: auto; /* Adds horizontal scroll if code is too long */
+}
+
+.mud-markdown-body code.att,
+.mud-markdown-body code.note,
+.mud-markdown-body code.tip,
+.mud-markdown-body code.warn {
+    margin: 1em 0;
+    background-color: inherit;
+    padding: 0.2em;
+    display: contents;
+}
+
+.mud-markdown-body div.me-alert {
+    margin-bottom: 0 !important;
+}
+
+.mud-markdown-body .mud-markdown-body a {
+    color: #6985ec !important;
+}
+
+
+
