@@ -1,3 +1,8 @@
+body {
+    overflow-y: scroll; /* 세로 스크롤바 항상 표시 */
+    scrollbar-gutter: stable both-edges; /* 스크롤바 공간 최소화 */
+}
+
 hr {
     display: block;
     visibility: visible;
@@ -6,9 +11,6 @@ hr {
     border: 1px solid #ccc;
 }
 
-/*.mud-markdown-body p {*/
-/*    white-space: pre-line;*/
-/*}*/
 
 .mud-markdown-body h1 {
     font-size: 1.875em;

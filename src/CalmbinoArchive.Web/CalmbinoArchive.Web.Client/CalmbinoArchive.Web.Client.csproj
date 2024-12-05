@@ -23,4 +23,8 @@
         <ProjectReference Include="..\CalmbinoArchive.Web.Shared\CalmbinoArchive.Web.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\Posts\PostList.razor" />
+    </ItemGroup>
+
 </Project>

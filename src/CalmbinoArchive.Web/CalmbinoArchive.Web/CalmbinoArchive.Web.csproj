@@ -243,10 +243,8 @@
         <_ContentIncludedByDefault Remove="wwwroot\lib\tinymce\tinymce.js"/>
         <_ContentIncludedByDefault Remove="wwwroot\lib\tinymce\tinymce.min.js"/>
         <_ContentIncludedByDefault Remove="Components\Editors\Editor.razor"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <AdditionalFiles Include="Pages\Posts\PostList.razor"/>
+        <_ContentIncludedByDefault Remove="Pages\Posts\PostDetail.razor"/>
+        <_ContentIncludedByDefault Remove="Pages\Posts\PostEditor.razor"/>
     </ItemGroup>
 
 </Project>

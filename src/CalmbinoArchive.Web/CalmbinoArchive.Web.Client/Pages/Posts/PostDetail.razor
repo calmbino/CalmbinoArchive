@@ -1,0 +1,47 @@
+@page "/posts/{PostId:int}"
+@rendermode @(new InteractiveWebAssemblyRenderMode(false))
+
+<h1>PostDetail</h1>
+
+<h3>Post Id: @PostId</h3>
+
+
+<MudPaper Elevation="5" Square="true" Class="pa-3">
+    <MudMarkdown Value="@_contentHtml"></MudMarkdown>
+</MudPaper>
+
+
+@code {
+    [Parameter] public int PostId { get; set; }
+
+    private string? _contentHtml = @"<h1 id=""markdown-editor-for-blazor"">Markdown Editor for Blazor</h1>
+        <p>This component is using <a href=""https://easy-markdown-editor.tk/"" target=""_blank"">EasyMDE</a> to display a nice editor and all functionalities are mapped. See the documentation for more details.</p>
+        <p>Go ahead, play around with the editor! Be sure to check out <strong>bold</strong>, <em>italic</em>, <a href=""https://www.puresourcecode.com"" target=""_blank"">links</a> and all the other features. You can type the Markdown syntax, use the toolbar, or use shortcuts like <code>ctrl-b</code> or <code>cmd-b</code>.</p>
+        <p>Please check <a href=""https://www.puresourcecode.com"" target=""_blank"">PureSourceCode.com</a> for more updates.</p>
+        <h2 id=""add-code"">Add code</h2>
+        <p>Markdown Editor supports <a href=""https://highlightjs.org/"" target=""_blank"">highlight.js</a> to colorize your code.</p>
+        <pre><code class=""code"">public async Task&lt;string&gt; GetValueAsync() {<br>    return false;<br>}<br></code></pre><br><h2 id=""add-a-mermaid-graph"">Add a mermaid graph</h2><br><p>From now on, the Markdown Editor can render mermaid graph. See the <a href=""https://mermaid.js.org/intro/"" target=""_blank"">documentation</a>.</p>
+        <pre><code class=""mermaid"">stateDiagram<br>    [*] --&gt; Still<br>    Still --&gt; [*]<br><br>    Still --&gt; Moving<br>    Moving --&gt; Still<br>    Moving --&gt; Crash<br>    Crash --&gt; [*]<br></code></pre><br><pre><code class=""att""><div class=""me-alert callout attention""><p class=""title""><span class=""me-icon icon-attention""></span> Attention</p><p>This is an example of attention message</p></div>
+        </code></pre>
+        <pre><code class=""note""><div class=""me-alert callout note""><p class=""title""><span class=""me-icon icon-note""></span> Note</p><p>This is a simple note message to add in the page</p></div>
+        </code></pre>
+        <pre><code class=""tip""><div class=""me-alert callout tip""><p class=""title""><span class=""me-icon icon-tip""></span> Tip</p><p>This is a tip to highlight some information</p></div>
+        </code></pre>
+        <pre><code class=""warn""><div class=""me-alert callout warning""><p class=""title""><span class=""me-icon icon-warning""></span> Warning</p><p>If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. </p></div>
+        </code></pre>
+        ";
+        
+
+    // protected override void OnAfterRender(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         Console.WriteLine(_contentHtml);
+    //     }
+    //     base.OnAfterRender(firstRender);
+    // }
+    //
+    // protected override void OnInitialized() => 
+    //
+
+}
