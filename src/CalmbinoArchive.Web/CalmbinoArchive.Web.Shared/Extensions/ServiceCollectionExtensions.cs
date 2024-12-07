@@ -11,7 +11,6 @@ public static class ServiceCollectionExtensions
     {
         // Add MudBlazor Services
         services.AddMudServices();
-        services.AddMudMarkdownServices();
 
         // TODO: Find ways to leverage Aspire's Service Discovery
         services.AddScoped<WeatherClientService>();

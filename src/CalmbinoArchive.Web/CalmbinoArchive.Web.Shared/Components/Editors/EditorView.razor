@@ -1,0 +1,62 @@
+@using Microsoft.JSInterop
+
+@implements IAsyncDisposable
+
+
+<h3>EditorView</h3>
+
+<div class="calmbino-view">
+    <MudPaper Elevation="5" Square="true" Class="pa-3">
+        @((MarkupString)Markdown.ToHtml(MarkdownValue, new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak()
+                                                                                    .UseEmojiAndSmiley()
+                                                                                    .UseSmartyPants()
+                                                                                    .UseAdvancedExtensions()
+                                                                                    .Build()))
+        <br/>
+        @Markdown.ToHtml(MarkdownValue, new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak()
+                                                                     .UseEmojiAndSmiley()
+                                                                     .UseSmartyPants()
+                                                                     .UseAdvancedExtensions()
+                                                                     .Build())
+
+    </MudPaper>
+</div>
+
+@code {
+    [Parameter] public string MarkdownValue { get; set; } = string.Empty;
+
+    private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
+    private readonly Lazy<Task<IJSObjectReference>> moduleTask;
+
+    public EditorView(IJSRuntime jsRuntime)
+    {
+        Console.WriteLine("View 초기화!!!");
+        _moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+                                             "import", "./_content/CalmbinoArchive.Web.Shared/js/editorView.js")
+                                         .AsTask());
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine("렌더링!!!!");
+        await CallHljs();
+    }
+
+    public async ValueTask CallHljs()
+    {
+        var module = await _moduleTask.Value;
+        await module.InvokeVoidAsync("callHljs");
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_moduleTask.IsValueCreated)
+        {
+            var module = await _moduleTask.Value;
+            await module.DisposeAsync();
+
+            Console.WriteLine("hljs 모듈 해제");
+        }
+    }
+
+}

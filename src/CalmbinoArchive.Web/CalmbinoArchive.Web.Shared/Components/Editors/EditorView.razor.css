@@ -1,0 +1,149 @@
+/* Alert 스타일 설정 */
+::deep .markdown-alert {
+    border-left: 4px solid;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+::deep .markdown-alert-title {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+::deep .markdown-alert-title svg {
+    margin-right: 8px;
+}
+
+::deep .markdown-alert-note {
+    background-color: #f0f4ff;
+    color: #1a3d7c;
+    border-color: #5a9df4;
+}
+
+::deep .markdown-alert-tip {
+    background-color: #e7f9ee;
+    color: #135d32;
+    border-color: #39c174;
+}
+
+::deep .markdown-alert-important {
+    background-color: #f3e8f9;
+    color: #4b0082;
+    border-color: #9370db;
+}
+
+::deep .markdown-alert-warning {
+    background-color: #fff7cc;
+    color: #664d00;
+    border-color: #e6b800;
+}
+
+::deep .markdown-alert-caution {
+    background-color: #ffe5e5;
+    color: #a30000;
+    border-color: #ff1a1a;
+}
+
+/* 헤더 및 단락 스타일 */
+::deep h1 {
+    font-size: 2em;
+    border-bottom: 2px solid #cccccc;
+    padding-bottom: 4px;
+    margin-bottom: 16px;
+}
+
+::deep h2 {
+    font-size: 1.75em;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+}
+
+::deep h3 {
+    font-size: 1.5em;
+    margin-bottom: 12px;
+}
+
+::deep h4 {
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+::deep h5 {
+    font-size: 1em;
+    margin-bottom: 8px;
+}
+
+::deep p {
+    font-size: 1em;
+    margin-bottom: 12px;
+}
+
+::deep h1, ::deep h2, ::deep h3, ::deep h4, ::deep h5, ::deep p {
+    margin: 0 0 1em 0;
+}
+
+/* 블록(quote) 스타일 */
+::deep blockquote {
+    padding: 1em;
+    margin: 1em 0;
+    border-left: 4px solid #6d6d6d;
+    background-color: #424242;
+    color: #f5f5f5;
+    font-style: italic;
+}
+
+::deep blockquote p {
+    margin: 0;
+}
+
+/* 리스트 스타일 */
+::deep ol, ::deep ul {
+    margin: 0 0 0.8rem 0; /* 외부 여백 제거, 리스트 구문 아래는 마진을 확보하여 다음 단락과 구분 */
+    padding-left: 1.5rem; /* 기본 들여쓰기 */
+    list-style-position: outside; /* 리스트 번호/기호를 리스트 외부에 표시 */
+}
+
+::deep ol li, ::deep ul li {
+    margin-bottom: 0.3rem; /* 리스트 아이템 간의 간격 */
+}
+
+::deep ul ul, ::deep ul ol, ::deep ol ul, ::deep ol ol {
+    margin-top: 0.3rem; /* 중첩된 리스트 위 간격 */
+    padding-left: 1.5rem; /* 추가적인 들여쓰기 */
+}
+
+::deep ul {
+    list-style-type: disc; /* 기본 기호는 점 */
+}
+
+::deep ul ul {
+    list-style-type: circle; /* 두 번째 중첩 시 원형 기호 */
+}
+
+::deep ul ul ul {
+    list-style-type: square; /* 세 번째 중첩 시 사각형 기호 */
+}
+
+
+
+/*!* 강조(code태그) 스타일 *!*/
+/*::deep code {*/
+/*    background-color: rgba(149, 159, 166, 0.2);*/
+/*    !*background-color: rgba(255, 182, 193, 0.3); !* 연한 붉은색 배경을 조금 더 밝게, 투명도도 살짝 증가 *!*!*/
+/*    color: #fa1b1b; !* 더 밝고 진한 붉은색으로 변경 *!*/
+/*    margin: 0;*/
+/*    padding: 0.3em 0.4em;*/
+/*    font-size: 90%;*/
+/*    border-radius: 6px;*/
+/*    !*font-weight: bold;*!*/
+/*    font-family: monospace; !* 코드를 강조하는 글꼴 설정 *!*/
+/*}*/
+
+/* 코드 블럭 스타일 */
+::deep pre {
+    margin-bottom: 1em; /* 코드 블럭 끝난 후 다음 줄과의 간격 */
+}
