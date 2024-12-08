@@ -128,6 +128,18 @@
     list-style-type: square; /* 세 번째 중첩 시 사각형 기호 */
 }
 
+::deep ul  li  ol { /* 첫 번째 수준의 ol: 숫자 */
+    list-style-type: decimal; /* 숫자 (1, 2, 3...) */
+}
+
+::deep ul  li ol li  ol { /* 두 번째 수준의 ol: 알파벳 */
+    list-style-type: lower-alpha; /* 알파벳 (a, b, c...) */
+}
+
+::deep ul li ol li ol li ol { /* 세 번째 수준의 ol: 로마자 */
+    list-style-type: lower-roman; /* 로마자 (i, ii, iii...) */
+}
+
 
 /* 강조(code 태그) 스타일 */
 ::deep code:not(pre code) { /* 코드 블럭에는 반영되지 않도록! */
