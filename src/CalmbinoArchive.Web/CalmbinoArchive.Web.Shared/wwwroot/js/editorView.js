@@ -10,16 +10,19 @@ export function changeLinkTarget() {
 }
 
 export function addCopyFuncInCodeBlock() {
-// Add copy functionality for highlighted code blocks
-    document.querySelectorAll('pre').forEach(pre => {
-        const button = document.createElement('button');
-        button.textContent = 'Copy';
-        button.className = 'copy-btn';
-        pre.appendChild(button);
+    // Add copy functionality for <pre><code></code></pre> only
+    document.querySelectorAll('pre > code').forEach(codeBlock => {
+        const pre = codeBlock.parentElement;
+        if (pre && pre.tagName === 'PRE') {
+            // Avoid duplicating buttons
+            if (pre.querySelector('.copy-btn')) return;
 
-        button.addEventListener('click', () => {
-            const codeBlock = pre.querySelector('code');
-            if (codeBlock) {
+            const button = document.createElement('button');
+            button.textContent = 'Copy';
+            button.className = 'copy-btn';
+            pre.appendChild(button);
+
+            button.addEventListener('click', () => {
                 const text = codeBlock.textContent;
 
                 // Copy to clipboard
@@ -33,7 +36,7 @@ export function addCopyFuncInCodeBlock() {
                 }).catch(err => {
                     console.error('Failed to copy text: ', err);
                 });
-            }
-        });
+            });
+        }
     });
 }
