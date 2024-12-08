@@ -183,5 +183,19 @@
     background-color: rgba(120, 120, 120, 0.9); /* 마우스 오버 시 강조 */
 }
 
+/* 하이퍼 링크 스타일 */
+/* 하이퍼링크 기본 스타일 */
+::deep a {
+    color: #007acc; /* 중간 밝기의 파란색: 모든 테마에서 가독성 좋음 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: bold; /* 링크 강조 */
+    transition: color 0.3s ease; /* 색상 전환 효과 */
+}
+
+/* 하이퍼링크 호버 스타일 */
+::deep a:hover {
+    color: #ff8c00; /* 모든 테마에서 잘 보이는 오렌지색 */
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
 
 

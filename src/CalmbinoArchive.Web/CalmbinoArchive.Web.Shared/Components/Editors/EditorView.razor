@@ -46,6 +46,7 @@
     {
         var module = await _moduleTask.Value;
         await module.InvokeVoidAsync("callHljs");
+        await module.InvokeVoidAsync("changeLinkTarget");
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()

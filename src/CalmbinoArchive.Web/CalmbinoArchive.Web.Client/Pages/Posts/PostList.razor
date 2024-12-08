@@ -5,7 +5,7 @@
         @for (int i = 0; i < 5; i++)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudLink Href=@(string.Format($"/posts/{_postId += 1}")) Underline="Underline.None" >
+                <MudLink Href=@(string.Format($"/posts/{_postId += 1}")) Underline="Underline.None">
                     <MudCard Elevation="5"
                              Style="position: relative; width: 100%; aspect-ratio: 4/3;">
                         <MudCardMedia Image="https://cdn.imweb.me/upload/S20210807d1f68b7a970c2/7170113c6a983.jpg"
@@ -13,15 +13,14 @@
                         <MudCardContent Style="height: 10rem; overflow-wrap: break-word">
                             <MudText Typo="Typo.h5">@(Id += 1) Old Paint</MudText>
                             <MudText Typo="Typo.body2">Old paint found on a stone house door.</MudText>
-                            <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+                            <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.
+                            </MudText>
                         </MudCardContent>
                         <MudCardContent>
                             <MudText Typo="Typo.body2">@(DateTime.Now)</MudText>
                         </MudCardContent>
-
                     </MudCard>
                 </MudLink>
-
             </MudItem>
         }
     </MudGrid>
