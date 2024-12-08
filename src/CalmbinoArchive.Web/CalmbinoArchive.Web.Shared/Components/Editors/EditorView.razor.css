@@ -145,6 +145,31 @@
 /* 코드 블럭 스타일 */
 ::deep pre {
     margin-bottom: 1em; /* 코드 블럭 끝난 후 다음 줄과의 간격 */
+    position: relative;
+    overflow: auto;
+}
+
+::deep .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 1; /* Ensure the button appears above code block */
+}
+
+::deep .copy-btn:hover {
+    background-color: #005f99;
+}
+
+::deep .copy-btn:active {
+    background-color: #004a73;
 }
 
 /* 기본 테이블 스타일 (공통) */

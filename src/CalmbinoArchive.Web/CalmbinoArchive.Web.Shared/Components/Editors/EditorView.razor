@@ -47,6 +47,8 @@
         var module = await _moduleTask.Value;
         await module.InvokeVoidAsync("callHljs");
         await module.InvokeVoidAsync("changeLinkTarget");
+        await module.InvokeVoidAsync("addCopyFuncInCodeBlock");
+
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
