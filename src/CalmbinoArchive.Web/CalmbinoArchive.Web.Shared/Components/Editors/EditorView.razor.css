@@ -129,21 +129,59 @@
 }
 
 
-
-/*!* 강조(code태그) 스타일 *!*/
-/*::deep code {*/
-/*    background-color: rgba(149, 159, 166, 0.2);*/
-/*    !*background-color: rgba(255, 182, 193, 0.3); !* 연한 붉은색 배경을 조금 더 밝게, 투명도도 살짝 증가 *!*!*/
-/*    color: #fa1b1b; !* 더 밝고 진한 붉은색으로 변경 *!*/
-/*    margin: 0;*/
-/*    padding: 0.3em 0.4em;*/
-/*    font-size: 90%;*/
-/*    border-radius: 6px;*/
-/*    !*font-weight: bold;*!*/
-/*    font-family: monospace; !* 코드를 강조하는 글꼴 설정 *!*/
-/*}*/
+/* 강조(code 태그) 스타일 */
+::deep code:not(pre code) { /* 코드 블럭에는 반영되지 않도록! */
+    background-color: rgba(149, 159, 166, 0.2);
+    /*background-color: rgba(255, 182, 193, 0.3); !* 연한 붉은색 배경을 조금 더 밝게, 투명도도 살짝 증가 *!*/
+    color: #fa1b1b; /* 더 밝고 진한 붉은색으로 변경 */
+    margin: 0;
+    padding: 0.3em 0.4em;
+    font-size: 90%;
+    border-radius: 6px;
+    /*font-weight: bold;*/
+    font-family: monospace; /* 코드를 강조하는 글꼴 설정 */
+}
 
 /* 코드 블럭 스타일 */
 ::deep pre {
     margin-bottom: 1em; /* 코드 블럭 끝난 후 다음 줄과의 간격 */
 }
+
+/* 기본 테이블 스타일 (공통) */
+::deep table {
+    width: auto; /* 글씨 길이에 맞게 테이블 크기 조정 */
+    border-collapse: collapse; /* 테두리 중복 제거 */
+    margin: 20px 0; /* 테이블 왼쪽 정렬 */
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* 기본 테두리 설정 */
+}
+
+::deep thead th {
+    background-color: rgba(60, 60, 60, 0.9); /* 다크 그레이 */
+    color: rgba(255, 255, 255, 0.9); /* 밝은 흰색 */
+    padding: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5); /* 헤더 하단 구분선 */
+}
+
+::deep tbody td {
+    border: 1px solid rgba(255, 255, 255, 0.2); /* 다크 테두리 */
+    padding: 10px;
+    color: rgba(230, 230, 230, 1); /* 밝은 텍스트 */
+}
+
+::deep tbody tr:nth-child(even) {
+    background-color: rgba(80, 79, 79, 0.6); /* 짝수 행 다크 회색 */
+}
+
+::deep tbody tr:nth-child(odd) {
+    background-color: rgba(124, 124, 124, 0.7); /* 홀수 행 다크 회색 */
+}
+
+::deep tbody tr:hover {
+    background-color: rgba(120, 120, 120, 0.9); /* 마우스 오버 시 강조 */
+}
+
+
+
