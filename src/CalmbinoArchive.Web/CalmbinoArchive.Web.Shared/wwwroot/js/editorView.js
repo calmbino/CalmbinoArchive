@@ -4,7 +4,8 @@ export function callHljs() {
 }
 
 export function changeLinkTarget() {
-    document.querySelectorAll('a').forEach(link => {
+    // 렌더링 뷰 내에 있는 a 태그에만 적용
+    document.querySelectorAll('.editor-view a').forEach(link => {
         link.setAttribute('target', '_blank');
     });
 }

@@ -2,7 +2,7 @@
 
 @implements IAsyncDisposable
 
-<div>
+<div class="editor-view">
     <MudPaper Elevation="5" Square="true" Class="pa-3">
         @((MarkupString)Markdown.ToHtml(MarkdownValue, new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak()
                                                                                     .UseEmojiAndSmiley()
