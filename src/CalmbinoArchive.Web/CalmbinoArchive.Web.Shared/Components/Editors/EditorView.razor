@@ -2,23 +2,13 @@
 
 @implements IAsyncDisposable
 
-
-<h3>EditorView</h3>
-
-<div class="calmbino-view">
+<div>
     <MudPaper Elevation="5" Square="true" Class="pa-3">
         @((MarkupString)Markdown.ToHtml(MarkdownValue, new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak()
                                                                                     .UseEmojiAndSmiley()
                                                                                     .UseSmartyPants()
                                                                                     .UseAdvancedExtensions()
                                                                                     .Build()))
-        <br/>
-        @Markdown.ToHtml(MarkdownValue, new MarkdownPipelineBuilder().UseSoftlineBreakAsHardlineBreak()
-                                                                     .UseEmojiAndSmiley()
-                                                                     .UseSmartyPants()
-                                                                     .UseAdvancedExtensions()
-                                                                     .Build())
-
     </MudPaper>
 </div>
 
@@ -26,7 +16,6 @@
     [Parameter] public string MarkdownValue { get; set; } = string.Empty;
 
     private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
-    private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
     public EditorView(IJSRuntime jsRuntime)
     {
@@ -42,16 +31,15 @@
         await CallHljs();
     }
 
-    public async ValueTask CallHljs()
+    private async ValueTask CallHljs()
     {
         var module = await _moduleTask.Value;
         await module.InvokeVoidAsync("callHljs");
         await module.InvokeVoidAsync("changeLinkTarget");
         await module.InvokeVoidAsync("addCopyFuncInCodeBlock");
-
     }
 
-    async ValueTask IAsyncDisposable.DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         if (_moduleTask.IsValueCreated)
         {

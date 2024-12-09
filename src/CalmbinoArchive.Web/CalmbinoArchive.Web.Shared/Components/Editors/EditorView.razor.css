@@ -79,11 +79,11 @@
 
 ::deep p {
     font-size: 1em;
-    margin-bottom: 12px;
+    margin-bottom: 1rem;
 }
 
-::deep h1, ::deep h2, ::deep h3, ::deep h4, ::deep h5, ::deep p {
-    margin: 0 0 1em 0;
+::deep h1, ::deep h2, ::deep h3, ::deep h4, ::deep h5 {
+    margin: 1.5rem 0 1rem 0;
 }
 
 /* 블록(quote) 스타일 */
@@ -234,5 +234,4 @@
     color: #ff8c00; /* 모든 테마에서 잘 보이는 오렌지색 */
     text-decoration: underline; /* 호버 시 밑줄 추가 */
 }
-
 

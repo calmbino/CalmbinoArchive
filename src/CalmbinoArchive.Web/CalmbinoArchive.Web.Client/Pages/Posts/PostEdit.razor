@@ -1,82 +1,72 @@
-@using System.Text.RegularExpressions
-@using Markdig
 @using PSC.Blazor.Components.MarkdownEditor
-@using CalmbinoArchive.Web.Shared.Components.Editors
 
 @page "/posts/create"
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 
-<MudContainer Class="d-flex flex-row" Style="width: 100%; padding: 0; margin: 0" MaxWidth="MaxWidth.ExtraLarge">
-    <MudContainer Style="width: 50%; height: 100%">
-        <MarkdownEditor Value="@markdownValue"
-                        ValueChanged="@OnMarkdownValueChanged"
-                        ValueHTMLChanged="@OnMarkdownValueHTMLChanged"
-                        MaxHeight="200"
-                        UploadImage="true"
-                        LineWrapping="false"
-                        AllowResize="true"
-                        SpellChecker="false" @ref="Markdown1" AutoSaveEnabled="true"/>
-
-        @* <button @onclick="ChangeText">Change text</button> *@
-        @* <button @onclick="DeleteStorage">Delete Local Storage</button> *@
-    </MudContainer>
-    <MudContainer>
-        <EditorView MarkdownValue="@markdownValue"></EditorView>
-    </MudContainer>
+<MudContainer  MaxWidth="MaxWidth.Large">
+    <MudTabs Elevation="2"
+             Rounded="true"
+             PanelClass="pa-6"
+             ApplyEffectsToContainer="true"
+             Border="true"
+    >
+        <MudTabPanel Text="Write">
+            <div>
+                <MarkdownEditor
+                    @bind-Value="@_markdownValue"
+                    MaxHeight="600"
+                    UploadImage="true"
+                    LineWrapping="false"
+                    AllowResize="true"
+                    SpellChecker="false"
+                    AutoSaveEnabled="true"/>
+            </div>
+        </MudTabPanel>
+        <MudTabPanel Text="Preview">
+            <div >
+                <EditorView MarkdownValue="@_markdownValue"></EditorView>
+            </div>
+        </MudTabPanel>
+    </MudTabs>
 </MudContainer>
 
-
 @code {
-    MarkdownEditor Markdown1;
+    private MarkdownEditor? _markdown1;
+    private string _markdownValue = string.Empty;
+    private int _activeIndex = 0;
 
-    string markdownValue = string.Empty;
-
-    // string markdownValue = "# Markdown Editor for Blazor\nThis component is using [EasyMDE](https://easy-markdown-editor.tk/) " +
-    //                        "to display a nice editor and all functionalities are mapped. See the documentation for more details.\n\n" +
-    //                        "Go ahead, play around with the editor! Be sure to check out **bold**, *italic*, " +
-    //                        "[links](https://www.puresourcecode.com) and all the other features. " +
-    //                        "You can type the Markdown syntax, use the toolbar, or use shortcuts like `ctrl-b` or `cmd-b`.\n\n" +
-    //                        "Please check [PureSourceCode.com](https://www.puresourcecode.com) for more updates.\n\n" +
-    //                        "## Add code\nMarkdown Editor supports [highlight.js](https://highlightjs.org/) to colorize your code.\n\n" +
-    //                        "```code\npublic async Task<string> GetValueAsync() {\n    return false;\n}\n```\n\n" +
-    //                        "## Add a mermaid graph\nFrom now on, the Markdown Editor can render mermaid graph. " +
-    //                        "See the [documentation](https://mermaid.js.org/intro/).\n\n" +
-    //                        "```mermaid\nstateDiagram\n    [*] --> Still\n    Still --> [*]\n\n    Still --> Moving\n    " +
-    //                        "Moving --> Still\n    Moving --> Crash\n    Crash --> [*]\n```\n\n" +
-    //                        "```att\nThis is an example of attention message\n```\n\n" +
-    //                        "```note\nThis is a simple note message to add in the page\n```\n\n" +
-    //                        "```tip\nThis is a tip to highlight some information\n```\n\n" +
-    //                        "```warn\nIf you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. If you want to warn a user about something, this is an example. \n```\n\n";
-
-    string? markdownHtml;
-
-
-    async Task ChangeText()
+    protected override void OnInitialized()
     {
-        markdownValue = "Test!";
-        await Markdown1.SetValueAsync(markdownValue);
+        Console.WriteLine("OnInitialized");
+        base.OnInitialized();
     }
 
-    async Task DeleteStorage()
+    protected override Task OnInitializedAsync()
     {
-        await Markdown1.CleanAutoSave();
+        Console.WriteLine("OnInitializedAsync");
+
+        return base.OnInitializedAsync();
     }
 
-    Task OnMarkdownValueChanged(string value)
+    protected override void OnAfterRender(bool firstRender)
     {
-        markdownValue = value;
+        Console.WriteLine("OnAfterRender");
 
-        return Task.CompletedTask;
+        base.OnAfterRender(firstRender);
     }
 
-    Task OnMarkdownValueHTMLChanged(string value)
+    protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        // p 태그 내부에 있는 개행문자는 br 태그로 치환
-        markdownHtml = Regex.Replace(value, @"(?<=<p[^>]*>)(.*?)(?=<\/p>)",
-            match => match.Value.Replace(Environment.NewLine, "<br>"),
-            RegexOptions.Singleline);
+        Console.WriteLine("OnAfterRenderAsync");
 
-        return Task.CompletedTask;
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine("ShouldRender");
+
+        return base.ShouldRender();
     }
 
 }

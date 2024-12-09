@@ -1,0 +1,6 @@
+::deep div.CodeMirror.cm-s-easymde {
+    min-height: 25rem; /* 초기 최소 높이 */
+    height: auto; /* 내용에 따라 유연하게 높이 조정 */
+    overflow-y: auto; /* 높이가 넘칠 경우 스크롤 */
+    resize: vertical; /* 사용자가 수직 크기 조정 가능 */
+}
