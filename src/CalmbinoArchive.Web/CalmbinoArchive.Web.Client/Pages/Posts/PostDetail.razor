@@ -1,9 +1,12 @@
 @page "/posts/{PostId}"
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 
-<h1>Post Id: @PostId</h1>
-
-<EditorView MarkdownValue="@_content"/>
+<MudContainer Style="padding: 0 10rem;">
+    <EditorView MarkdownValue="@_content"/>
+    <MudScrollToTop>
+        <MudFab IconSize="Size.Medium" Color="Color.Surface" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
+    </MudScrollToTop>
+</MudContainer>
 
 
 @code {

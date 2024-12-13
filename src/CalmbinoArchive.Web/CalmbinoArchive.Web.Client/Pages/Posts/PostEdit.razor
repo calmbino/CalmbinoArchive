@@ -1,9 +1,11 @@
 @using PSC.Blazor.Components.MarkdownEditor
+@using SlugityLib
+@using SlugityLib.Configuration
 
 @page "/posts/create"
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 
-<MudContainer  MaxWidth="MaxWidth.Large">
+<MudContainer MaxWidth="MaxWidth.Large">
     <MudTabs Elevation="2"
              Rounded="true"
              PanelClass="pa-6"
@@ -11,6 +13,42 @@
              Border="true"
     >
         <MudTabPanel Text="Write">
+            <div class="post-edit-info-container">
+                <div class="post-edit-info-item">
+                    <MudTextField
+                        T="string"
+                        @bind-Value="Title"
+                        Label="Title"
+                        Counter="@_maxTitleLength"
+                        MaxLength="@_maxTitleLength"
+                        Immediate="true"
+                        Validation="@(new Func<string, IEnumerable<string>>(ValidateTitle))"
+                        Variant="Variant.Outlined"
+                        HelperText="제목을 입력하세요."/>
+                    <MudTextField
+                        T="string"
+                        @bind-Value="Description"
+                        Label="Description"
+                        Counter="@_maxDescriptionLength"
+                        MaxLength="@_maxDescriptionLength"
+                        Immediate="true"
+                        Validation="@(new Func<string, IEnumerable<string>>(ValidateDescription))"
+                        Variant="Variant.Outlined"
+                        HelperText="간단한게 본문을 설명하거나 요약하세요."
+                        Lines="3"/>
+                </div>
+                <div class="post-edit-info-item">
+                    <MudTextField
+                        T="string"
+                        @bind-Value="@Slug"
+                        ReadOnly="true"
+                        Label="Slug"
+                        Immediate="true"
+                        Variant="Variant.Outlined"
+                        HelperText="URL(Slug)이 자동으로 생성됩니다."/>
+                    <MudFlexBreak/>
+                </div>
+            </div>
             <div>
                 <MarkdownEditor
                     @bind-Value="@_markdownValue"
@@ -23,7 +61,7 @@
             </div>
         </MudTabPanel>
         <MudTabPanel Text="Preview">
-            <div >
+            <div>
                 <EditorView MarkdownValue="@_markdownValue"></EditorView>
             </div>
         </MudTabPanel>
@@ -31,12 +69,28 @@
 </MudContainer>
 
 @code {
+    private Slugity _slugHelper;
+
     private MarkdownEditor? _markdown1;
     private string _markdownValue = string.Empty;
     private int _activeIndex = 0;
 
+    private int _maxTitleLength = 50;
+    private int _maxDescriptionLength = 150;
+
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public string? Slug { get; set; } = "/";
+
+
     protected override void OnInitialized()
     {
+        var config = new SlugityConfig
+        {
+            MaxLength = _maxTitleLength
+        };
+
+        _slugHelper = new Slugity(config);
         Console.WriteLine("OnInitialized");
         base.OnInitialized();
     }
@@ -69,4 +123,22 @@
         return base.ShouldRender();
     }
 
+    private IEnumerable<string> ValidateTitle(string title)
+    {
+        if (!string.IsNullOrEmpty(title) && _maxTitleLength < title?.Length)
+            yield return $"최대 {_maxTitleLength}자 이내로 작성해주세요.";
+
+        Slug = title == string.Empty ? "/" : $"/{_slugHelper.GenerateSlug(Title)}";
+
+    }
+
+    private IEnumerable<string> ValidateDescription(string description)
+    {
+        
+        if (!string.IsNullOrEmpty(description) && _maxDescriptionLength < description?.Length)
+            yield return $"최대 {_maxDescriptionLength}자 이내로 작성해주세요.";
+        
+
+    }
+    
 }
