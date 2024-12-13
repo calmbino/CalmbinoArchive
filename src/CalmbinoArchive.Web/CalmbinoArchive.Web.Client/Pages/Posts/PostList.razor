@@ -1,70 +1,102 @@
 @page "/posts"
-@using System.Runtime.InteropServices.JavaScript
+@rendermode @(new InteractiveWebAssemblyRenderMode(false))
 
-<MudContainer Style="padding: 0 15em">
-    <MudContainer Class="d-flex justify-end" Style="margin-bottom: 0.8em;">
-        <MudButton ButtonType="ButtonType.Button"
-                   Href="/posts/create"
-                   Variant="Variant.Outlined"
-                   StartIcon="@Icons.Material.Filled.Create"
-                   Color="Color.Inherit">
-            작성하기
-        </MudButton>
-    </MudContainer>
-    <MudDivider/>
-    <MudList T="MudCard">
-        @for (int i = 0; i < 7; i++)
+<div class="calmbino-post-list-container">
+    <div Class="calmbino-post-list-func" Style="width: 100%; padding-inline: 1rem">
+        <MudButton Class="" Href="/posts/create" Variant="Variant.Outlined" Color="Color.Primary" StartIcon="@Icons.Material.Filled.ModeEdit">Write</MudButton>
+    </div>
+    <MudDivider Style="margin: 0.8rem;"/>
+
+    <div class="calmbino-post-card-grid">
+        @foreach (var post in Posts)
         {
-            <MudListItem Href=@($"/posts/{i + 1}")>
-                <MudCard Class="d-flex flex-row">
-                    <MudCardMedia Style="width: 40%; height: auto; aspect-ratio: 4/3;"  Image="https://cdn.imweb.me/upload/S20210807d1f68b7a970c2/7170113c6a983.jpg"/>
-                    <MudCardContent Style="padding: 2em">
-                        <MudText Typo="Typo.h5">제목입니다.</MudText>
-                        <MudDivider Style="margin: 1em 0"/>
-                        <MudText Style="height: 120px" Typo="Typo.body2">간단한 요약&설명입니다.</MudText>
-                        <MudDivider Style="margin: 1em 0"/>
-                        <MudText Align="Align.Right" Typo="Typo.body2">작성일: @(DateTime.Now)</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudListItem>
+
+        <MudCard Class="calmbino-post-card"
+                 Outlined="true"
+                 Elevation="10">
+            <a class="calmbino-post-card-link"
+                href="@($"/posts/{post.Id}")">
+            <MudCardHeader>
+                <MudText Class="calmbino-post-card-title" Typo="Typo.h6">@post.Title</MudText>
+            </MudCardHeader>
+            <MudDivider DividerType="DividerType.Middle"/>
+            <MudCardContent Style="height: 100%">
+                <MudText Class="calmbino-post-card-description" Typo="Typo.body1">@post.Content</MudText>
+            </MudCardContent>
+            <MudDivider DividerType="DividerType.Middle"/>
+            <MudCardContent Class="d-flex flex-row-reverse">
+                <MudText Typo="Typo.body2" Style="font-style: italic;">작성일: @post.CreatedAt</MudText>
+            </MudCardContent>
+            </a>
+            
+        </MudCard>
+
+            
         }
-    </MudList>
-</MudContainer>
+    </div>
+    <MudContainer Class="d-flex flex-column align-center">
+        <MudPagination
+            Rectangular="true"
+            Variant="Variant.Outlined"
+            ShowFirstButton="true"
+            ShowLastButton="true"
+            BoundaryCount="2"
+            MiddleCount="3"
+            Count="2"
+            SelectedChanged="SelectPage"/>
+    </MudContainer>
+</div>
 
 
-
-
-
-
-@* <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="d-flex flex-wrap justify-space-between gap-3"> *@
-@*     <MudGrid Justify="Justify.FlexStart"> *@
-@*         @for (int i = 0; i < 5; i++) *@
-@*         { *@
-@*             <MudItem xs="12" sm="6" md="4" lg="3"> *@
-@*                 <MudLink Href=@(string.Format($"/posts/{_postId += 1}")) Underline="Underline.None"> *@
-@*                     <MudCard Elevation="5" *@
-@*                              Style="position: relative; width: 100%; aspect-ratio: 4/3;"> *@
-@*                         <MudCardMedia Image="https://cdn.imweb.me/upload/S20210807d1f68b7a970c2/7170113c6a983.jpg" *@
-@*                                       Style="object-fit: cover; aspect-ratio: 4/3; height: 10rem; width: 100%"/> *@
-@*                         <MudCardContent Style="height: 10rem; overflow-wrap: break-word"> *@
-@*                             <MudText Typo="Typo.h5">@(Id += 1) Old Paint</MudText> *@
-@*                             <MudText Typo="Typo.body2">Old paint found on a stone house door.</MudText> *@
-@*                             <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia. *@
-@*                             </MudText> *@
-@*                         </MudCardContent> *@
-@*                         <MudCardContent> *@
-@*                             <MudText Typo="Typo.body2">@(DateTime.Now)</MudText> *@
-@*                         </MudCardContent> *@
-@*                     </MudCard> *@
-@*                 </MudLink> *@
-@*             </MudItem> *@
-@*         } *@
-@*     </MudGrid> *@
-@* *@
-@* </MudContainer> *@
 
 @code{
+    private int _selected = 1;
+
     private int _postId = 0;
+    private int _totalCnt = 0;
     public int Id { get; set; }
+
+    public record Post(Guid Id, string Title, string Content, DateTime CreatedAt);
+
+    public List<Post> Posts;
+
+    protected override void OnInitialized()
+    {
+        Posts = GetPosts(6);
+        base.OnInitialized();
+
+    }
+
+    private List<Post> GetPosts(int cnt)
+    {
+        // await Task.Delay(1000);
+
+        List<Post> newPosts = [];
+
+        for (int i = 0; i < cnt; i++)
+        {
+            _totalCnt += 1;
+            newPosts.Add(new Post(
+                Guid.NewGuid(), 
+                $"제목입니다({_totalCnt})", 
+                "간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.간단한 설명 및 요약입니다.", 
+                DateTime.Now));
+        }
+
+        Console.WriteLine("데이터 5건 조회 완료");
+
+        return newPosts;
+    }
+
+    private void SelectPage(int page)
+    {
+        _selected = page;
+
+        int cnt = page == 1 ? 6 : 5;
+        Posts = GetPosts(cnt);
+        
+        
+        Console.WriteLine($"Page 선택 >> {_selected}");
+    }
 
 }

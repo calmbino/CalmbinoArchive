@@ -1,4 +1,4 @@
-@page "/posts/{PostId:int}"
+@page "/posts/{PostId}"
 @rendermode @(new InteractiveWebAssemblyRenderMode(false))
 
 <h1>Post Id: @PostId</h1>
@@ -7,7 +7,7 @@
 
 
 @code {
-    [Parameter] public int PostId { get; set; }
+    [Parameter] public string PostId { get; set; }
 
     private string _content { get; set; } = @"# 블로그 제목: 마크다운 문법의 모든 것 🌟
 
