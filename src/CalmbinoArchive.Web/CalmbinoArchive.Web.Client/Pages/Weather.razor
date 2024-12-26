@@ -56,7 +56,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await WeatherClientService.GetDatasAsync();
+        try
+        {
+            _forecasts = await WeatherClientService.GetDatasAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
 }

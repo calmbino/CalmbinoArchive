@@ -1,18 +1,33 @@
 @page "/posts/{PostId}"
-@rendermode @(new InteractiveWebAssemblyRenderMode(false))
+@rendermode @(new InteractiveWebAssemblyRenderMode(true))
 
-<MudContainer Style="padding: 0 10rem;">
+<PageTitle>@Title</PageTitle>
+
+<div style="padding: 0 10rem;">
+    <div style="margin-bottom: 0.5rem">
+        <MudPaper Style="padding: 0.5rem;" Elevation="4">
+            <MudText Typo="Typo.h1" Style="font-size: 3rem;">@Title</MudText>
+        </MudPaper>
+    </div>
     <EditorView MarkdownValue="@_content"/>
     <MudScrollToTop>
-        <MudFab IconSize="Size.Medium" Color="Color.Surface" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
+        <MudFab IconSize="Size.Medium" Color="Color.Surface" StartIcon="@Icons.Material.Filled.ArrowCircleUp"/>
     </MudScrollToTop>
-</MudContainer>
+</div>
 
+<HeadContent>
+    <meta name="description" content="@Description"/>
+    <meta name="author" content="Calmbino"/>
+</HeadContent>
 
 @code {
     [Parameter] public string PostId { get; set; }
 
-    private string _content { get; set; } = @"# 블로그 제목: 마크다운 문법의 모든 것 🌟
+    public string Title { get; set; } = "제목입니다!!!";
+    public string Description { get; set; } = "요약 및 설명입니다!!!";
+
+
+    private string _content { get; set; } = @"# 마크다운 문법의 모든 것 🌟
 
 > **요약**  
 > 마크다운은 간단하고 직관적인 문서 작성 언어입니다. 이 문서에서는 모든 주요 마크다운 문법을 소개합니다.

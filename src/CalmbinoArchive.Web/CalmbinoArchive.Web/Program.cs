@@ -15,7 +15,7 @@ builder.AddServiceDefaults();
 builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
-builder.Services.AddWebShared()
+builder.Services.AddWebShared(builder.Configuration)
        .AddApplication()
        .AddInfrastructure(builder.Configuration);
 

@@ -11,6 +11,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.ServiceDiscovery" Version="9.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -24,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Pages\Posts\PostList.razor" />
+        <AdditionalFiles Include="Pages\Posts\PostList.razor"/>
     </ItemGroup>
 
 </Project>
