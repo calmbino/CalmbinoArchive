@@ -3,7 +3,6 @@ using System.Text.Json;
 using CalmbinoArchive.Web.Shared.Extensions;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.ServiceDiscovery;
 using MudBlazor.Services;
 
