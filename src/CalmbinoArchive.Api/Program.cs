@@ -21,6 +21,9 @@ builder.Services.AddCors(options =>
 // Add aspire Services
 builder.AddServiceDefaults();
 
+// Add PostgreSQL
+builder.AddPostgreDatabase();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddApplication()

@@ -2,8 +2,12 @@ using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var db = builder.AddPostgres("db")
-                .WithPgAdmin();
+var dbServer = builder.AddPostgres("db")
+                      .WithDataVolume()
+                      .WithPgAdmin();
+
+var db = dbServer.AddDatabase("CalmbinoArchive");
+
 var cache = builder.AddRedis("cache")
                    .WithImageRegistry("ghcr.io")
                    .WithImage("microsoft/garnet")
@@ -18,12 +22,12 @@ var api = builder.AddProject<CalmbinoArchive_Api>("backend")
                  .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
                  .WithEndpoint("https", endpoint => endpoint.IsProxied = false);
 
-builder.AddProject<CalmbinoArchive_Web>("frontend")
-       .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
-       .WithEndpoint("https", endpoint => endpoint.IsProxied = false)
-       .WithReference(api)
-       .WithExternalHttpEndpoints();
-
+// builder.AddProject<CalmbinoArchive_Web>("frontend")
+//        .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
+//        .WithEndpoint("https", endpoint => endpoint.IsProxied = false)
+//        .WithReference(api)
+//        .WaitFor(api)
+//        .WithExternalHttpEndpoints();
 
 builder.Build()
        .Run();
