@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -23,16 +25,14 @@ public class Worker(
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 
+
             await EnsureDatabaseAsync(dbContext, cancellationToken);
             await RunMigrationAsync(dbContext, cancellationToken);
-            // await SeedDataAsync(dbContext, cancellationToken);
+            await SeedDataAsync(dbContext, serviceProvider, cancellationToken);
         }
         catch (Exception ex)
         {
             activity?.RecordException(ex);
-
-            Console.WriteLine("무슨 문제입니까????>> " + ex);
-
             throw;
         }
 
@@ -74,23 +74,48 @@ public class Worker(
         // await strategy.ExecuteAsync(dbContext.Database.MigrateAsync, cancellationToken);
     }
 
-    // private static async Task SeedDataAsync(DataContext dbContext, CancellationToken cancellationToken)
-    // {
-    //     SupportTicket firstTicket = new()
-    //     {
-    //         Title = "Test Ticket",
-    //         Description = "Default ticket, please ignore!",
-    //         Completed = true
-    //     };
-    //
-    //     var strategy = dbContext.Database.CreateExecutionStrategy();
-    //     await strategy.ExecuteAsync(async () =>
-    //     {
-    //         // Seed the database
-    //         await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
-    //         await dbContext.Tickets.AddAsync(firstTicket, cancellationToken);
-    //         await dbContext.SaveChangesAsync(cancellationToken);
-    //         await transaction.CommitAsync(cancellationToken);
-    //     });
-    // }
+    private static async Task SeedDataAsync(DataContext dbContext, IServiceProvider serviceProvider,
+        CancellationToken cancellationToken)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        var roles = new List<IdentityRole>
+        {
+            new() { Name = "Member" },
+            new() { Name = "Admin" },
+        };
+
+        User admin = new()
+        {
+            FirstName = "Gildong",
+            LastName = "Hong",
+            UserName = "Calmbino",
+            Email = "calmbino@gmail.com",
+        };
+
+        var strategy = dbContext.Database.CreateExecutionStrategy();
+        await strategy.ExecuteAsync(async () =>
+        {
+            // Seed the database(User & Role)
+            foreach (var role in roles)
+            {
+                await roleManager.CreateAsync(role);
+            }
+
+            var result = await userManager.CreateAsync(admin, "Test!@#123");
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    Console.WriteLine($"Error: {error.Code} - {error.Description}");
+                }
+            }
+
+            await userManager.AddToRoleAsync(admin, "Admin");
+
+            await dbContext.SaveChangesAsync(cancellationToken);
+        });
+    }
 }
