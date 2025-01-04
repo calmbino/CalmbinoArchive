@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-CalmbinoArchive.MigrationService-f7ba3588-bdf5-4b18-a00e-f67fc2b80af3</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\aspire\CalmbinoArchive.ServiceDefaults\CalmbinoArchive.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
+    </ItemGroup>
+</Project>
