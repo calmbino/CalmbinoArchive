@@ -1,12 +1,12 @@
+using Microsoft.Extensions.Hosting;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var dbServer = builder.AddPostgres("db")
-                      .WithDataVolume()
-                      .WithPgAdmin();
-
-var db = dbServer.AddDatabase("CalmbinoArchive");
+var db = builder.AddPostgres("db", port: 5432)
+                .WithDataVolume()
+                .WithPgAdmin()
+                .AddDatabase("CalmbinoArchive");
 
 var cache = builder.AddRedis("cache")
                    .WithImageRegistry("ghcr.io")
@@ -21,6 +21,9 @@ var api = builder.AddProject<CalmbinoArchive_Api>("backend")
                  .WaitFor(db)
                  .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
                  .WithEndpoint("https", endpoint => endpoint.IsProxied = false);
+
+builder.AddProject<CalmbinoArchive_MigrationService>("migrations")
+       .WithReference(db);
 
 // builder.AddProject<CalmbinoArchive_Web>("frontend")
 //        .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
