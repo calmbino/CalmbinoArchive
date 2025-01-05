@@ -4,15 +4,15 @@ using Projects;
 var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddPostgres("db", port: 5432)
-                .WithDataVolume()
+                .WithDataBindMount("../../docker/postgresql/data")
                 .WithPgAdmin()
                 .AddDatabase("CalmbinoArchive");
 
 var cache = builder.AddRedis("cache")
-                   .WithImageRegistry("ghcr.io")
-                   .WithImage("microsoft/garnet")
-                   .WithImageTag("latest")
-                   .WithRedisInsight();
+                   .WithDataBindMount("../../docker/redis/data")
+                   .WithPersistence(TimeSpan.FromSeconds(10), 5)
+                   .WithRedisInsight()
+                   .WithRedisCommander();
 
 var api = builder.AddProject<CalmbinoArchive_Api>("backend")
                  .WithReference(cache)

@@ -20,12 +20,12 @@ public class DataContext : IdentityDbContext<User>
         // 테이블 이름 변경
         builder.Entity<User>(entity =>
         {
-            entity.ToTable("Users"); // 기본 테이블 AspNetUsers → Users로 변경
+            entity.ToTable("User"); // 기본 테이블 AspNetUsers → Users로 변경
         });
 
         builder.Entity<IdentityRole>(entity =>
         {
-            entity.ToTable("Roles"); // 기본 테이블 AspNetRoles → Roles로 변경
+            entity.ToTable("Role"); // 기본 테이블 AspNetRoles → Roles로 변경
         });
 
         builder.Entity<IdentityUserRole<string>>(entity =>
