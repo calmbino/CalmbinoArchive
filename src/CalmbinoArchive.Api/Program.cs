@@ -2,8 +2,17 @@ using CalmbinoArchive.Application.Extensions;
 using CalmbinoArchive.Infrastructure.Extensions;
 using CalmbinoArchive.ServiceDefaults;
 using Scalar.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
+                                      .WriteTo.Console()
+                                      .WriteTo.File("../../logs/api.log.txt", rollingInterval: RollingInterval.Day)
+                                      .CreateLogger();
+
+builder.Host.UseSerilog();
+Log.Logger.Information("Application is building.....");
 
 builder.Services.AddCors(options =>
 {
@@ -33,27 +42,41 @@ builder.Services.AddApplication()
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-var app = builder.Build();
 
-// Configure aspire
-app.MapDefaultEndpoints();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+    var app = builder.Build();
+    app.UseSerilogRequestLogging();
+
+    // Configure aspire
+    app.MapDefaultEndpoints();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.MapOpenApi();
+        app.MapScalarApiReference();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.UseCors();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    Log.Logger.Information("Application is running.....");
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.UseCors();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Logger.Error(ex, "Application failed to start.....");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

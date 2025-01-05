@@ -1,6 +1,8 @@
 using System.Text;
+using CalmbinoArchive.Application.Services.Interfaces.Logging;
 using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Data;
+using CalmbinoArchive.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,8 @@ public static class ServiceCollectionExtensions
                 });
 
         services.AddAuthorization();
+
+        services.AddScoped(typeof(IAppLogger<>), typeof(SerilogLoggerAdapter<>));
 
         return services;
     }
