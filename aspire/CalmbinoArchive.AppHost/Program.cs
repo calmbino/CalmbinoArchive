@@ -5,14 +5,11 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddPostgres("db", port: 5432)
                 .WithDataBindMount("../../docker/postgresql/data")
-                .WithPgAdmin()
                 .AddDatabase("CalmbinoArchive");
 
-var cache = builder.AddRedis("cache")
-                   .WithDataBindMount("../../docker/redis/data")
-                   .WithPersistence(TimeSpan.FromSeconds(10), 5)
-                   .WithRedisInsight()
-                   .WithRedisCommander();
+var cache = builder.AddGarnet("cache", port: 6379)
+                   .WithDataBindMount("../../docker/garnet/data")
+                   .WithPersistence(TimeSpan.FromSeconds(10), 5);
 
 var api = builder.AddProject<CalmbinoArchive_Api>("backend")
                  .WithReference(cache)

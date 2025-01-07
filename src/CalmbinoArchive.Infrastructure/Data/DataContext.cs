@@ -1,4 +1,5 @@
 using CalmbinoArchive.Domain.Entities.Identity;
+using EntityFramework.Exceptions.PostgreSQL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -52,24 +53,5 @@ public class DataContext : IdentityDbContext<User>
         {
             entity.ToTable("UserToken"); // 기본 테이블 AspNetUserTokens → UserTokens로 변경
         });
-    }
-}
-
-public static class Extensions
-{
-    public static void CreateDbIfNotExists(this IHost host)
-    {
-        using var scope = host.Services.CreateScope();
-
-        var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<DataContext>();
-        try
-        {
-            context.Database.EnsureCreated();
-            // DbInitializer.Initialize(context);
-        }
-        catch (Exception ex)
-        {
-        }
     }
 }

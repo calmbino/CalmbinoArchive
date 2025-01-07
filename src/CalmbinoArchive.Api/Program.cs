@@ -1,5 +1,6 @@
 using CalmbinoArchive.Application.Extensions;
 using CalmbinoArchive.Infrastructure.Extensions;
+using CalmbinoArchive.Infrastructure.Middlewares;
 using CalmbinoArchive.ServiceDefaults;
 using Scalar.AspNetCore;
 using Serilog;
@@ -12,6 +13,7 @@ Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
                                       .CreateLogger();
 
 builder.Host.UseSerilog();
+
 Log.Logger.Information("Application is building.....");
 
 builder.Services.AddCors(options =>
@@ -42,6 +44,8 @@ builder.Services.AddApplication()
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 try
 {
@@ -56,11 +60,15 @@ try
     {
         app.MapOpenApi();
         app.MapScalarApiReference();
+        app.UseDeveloperExceptionPage();
     }
 
+    // app.UseExceptionHandler("/Error");
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
+
+    app.UseExceptionHandler();
 
     app.MapControllers();
 
