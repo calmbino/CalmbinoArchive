@@ -4,15 +4,21 @@ using CalmbinoArchive.Infrastructure.Middlewares;
 using CalmbinoArchive.ServiceDefaults;
 using Scalar.AspNetCore;
 using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// TODO: move to infrastructure Layer
 Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
                                       .WriteTo.Console()
-                                      .WriteTo.File("../../logs/api.log.txt", rollingInterval: RollingInterval.Day)
+                                      .WriteTo.File("../../logs/api_.txt", rollingInterval: RollingInterval.Day)
                                       .CreateLogger();
-
-builder.Host.UseSerilog();
+// builder.Host.UseSerilog((context, configuration) =>
+// {
+//     configuration.WriteTo.Console();
+//     configuration.WriteTo.File("../../logs/api_.txt", rollingInterval: RollingInterval.Day);
+// });
+builder.Services.AddSerilog(Log.Logger);
 
 Log.Logger.Information("Application is building.....");
 
