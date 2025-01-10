@@ -1,4 +1,5 @@
 using CalmbinoArchive.Application.Extensions;
+using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Extensions;
 using CalmbinoArchive.Infrastructure.Middlewares;
 using CalmbinoArchive.ServiceDefaults;
@@ -65,7 +66,7 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.MapOpenApi();
-        app.MapScalarApiReference();
+        app.MapScalarApiReference(options => { options.Theme = ScalarTheme.Moon; });
         app.UseDeveloperExceptionPage();
     }
 

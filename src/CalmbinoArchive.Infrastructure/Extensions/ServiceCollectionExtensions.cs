@@ -14,11 +14,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddIdentityCore<User>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<DataContext>()
-                .AddApiEndpoints();
-
+        services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
@@ -32,7 +28,12 @@ public static class ServiceCollectionExtensions
                     };
                 });
 
-        services.AddAuthorization();
+
+        services.AddIdentityCore<User>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>();
+
+        services.AddIdentityApiEndpoints<User>();
 
         return services;
     }

@@ -9,7 +9,11 @@ public static class DatabaseExtentions
     public static IHostApplicationBuilder? AddPostgreDatabase(this IHostApplicationBuilder builder)
     {
         builder.AddNpgsqlDbContext<DataContext>("CalmbinoArchive",
-            configureDbContextOptions: (options => { options.UseExceptionProcessor(); }));
+            configureDbContextOptions: (options =>
+            {
+                options.UseExceptionProcessor();
+                options.EnableSensitiveDataLogging();
+            }));
 
         return builder;
     }
