@@ -9,7 +9,8 @@ var db = builder.AddPostgres("db", port: 5432)
 
 var cache = builder.AddGarnet("cache", port: 6379)
                    .WithDataBindMount("../../docker/garnet/data")
-                   .WithPersistence(TimeSpan.FromSeconds(10), 5);
+                   .WithPersistence(TimeSpan.FromSeconds(10), 5)
+                   .WithArgs("--lua"); // Garnet은 DistributedCache 인터페이스(set 명령어)를 사용하기 위해 Lua script 활성화 필요.
 
 var api = builder.AddProject<CalmbinoArchive_Api>("backend")
                  .WithReference(cache)

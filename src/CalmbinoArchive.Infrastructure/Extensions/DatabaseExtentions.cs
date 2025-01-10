@@ -15,6 +15,10 @@ public static class DatabaseExtentions
                 options.EnableSensitiveDataLogging();
             }));
 
+
+        builder.AddRedisDistributedCache("cache");
+        // builder.AddRedisClient("cache");
+
         return builder;
     }
 }

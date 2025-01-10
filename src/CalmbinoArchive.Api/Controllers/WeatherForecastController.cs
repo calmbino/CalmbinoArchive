@@ -29,6 +29,7 @@ public class WeatherForecastController(ILogger<WeatherForecastController> logger
         logger.LogInformation("Get WeatherForecast: {@Result}", result);
         Log.Information("Get WeatherForecast: {@Result}", result);
 
+
         return result;
     }
 }
