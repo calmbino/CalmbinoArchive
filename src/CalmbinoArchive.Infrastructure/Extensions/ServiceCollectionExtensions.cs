@@ -3,7 +3,6 @@ using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -16,18 +15,22 @@ public static class ServiceCollectionExtensions
     {
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
+                .AddJwtBearer(options =>
                 {
-                    opt.TokenValidationParameters = new TokenValidationParameters
+                    // options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
                         ValidateAudience = false,
+                        ValidateIssuer = false,
                         ValidateLifetime = true,
+                        RequireExpirationTime = true,
                         ValidateIssuerSigningKey = true,
+                        // 토큰의 만료 시간(exp)과 현재 시간의 허용 오차를 정의.
+                        // 보통 서버 간 시간 차이로 인한 유효성 검증 실패를 방지하기 위해 오차를 허용.
+                        ClockSkew = TimeSpan.Zero,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySecretKey")),
                     };
                 });
-
 
         services.AddIdentityCore<User>()
                 .AddRoles<IdentityRole>()
