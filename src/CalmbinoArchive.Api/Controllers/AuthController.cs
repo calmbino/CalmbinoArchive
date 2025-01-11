@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using CalmbinoArchive.Application.Interfaces;
 using CalmbinoArchive.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,16 +17,25 @@ public class AuthController(
     ILogger<AuthController> logger,
     SignInManager<User> signInManager,
     UserManager<User> userManager,
-    IDistributedCache cache
+    ICacheService cache
 ) : ControllerBase
 {
+    [HttpDelete("cacheDelete")]
+    public async Task<ActionResult<bool>> CacheDelete()
+    {
+        // await cache.RemoveAsync("user_calmbino@gmail.com");
+        await cache.RemoveByPrefixAsync("user");
+
+        return true;
+    }
+
     [HttpPost("login", Name = "User Login")]
     public async Task<ActionResult<bool>> Login(LoginRequestDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var cacheKey = $"user_{dto.Email}";
-        var cachedUser = await cache.GetAsync(cacheKey);
+        var cachedUser = await cache.GetAsync<User>(cacheKey);
 
         if (cachedUser is null)
         {
@@ -38,8 +48,7 @@ public class AuthController(
 
         var selectedUser = await userManager.FindByEmailAsync(dto.Email);
 
-        await cache.SetAsync(cacheKey, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(selectedUser)),
-            new DistributedCacheEntryOptions() { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30) });
+        await cache.SetAsync<User>(cacheKey, selectedUser, TimeSpan.FromMinutes(30));
 
         var loginResult = await signInManager.PasswordSignInAsync(selectedUser, dto.Password, false, false);
 

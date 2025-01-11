@@ -1,6 +1,13 @@
+using CalmbinoArchive.Application.Interfaces;
 using CalmbinoArchive.Infrastructure.Data;
+using CalmbinoArchive.Infrastructure.Services;
 using EntityFramework.Exceptions.PostgreSQL;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Extensions.Logging;
+using ILogger = Serilog.ILogger;
 
 namespace CalmbinoArchive.Infrastructure.Extensions;
 
@@ -16,8 +23,8 @@ public static class DatabaseExtentions
             }));
 
 
-        builder.AddRedisDistributedCache("cache");
-        // builder.AddRedisClient("cache");
+        builder.AddRedisClient("cache");
+        builder.Services.AddScoped<ICacheService, CacheService>();
 
         return builder;
     }
