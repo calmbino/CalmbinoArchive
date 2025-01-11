@@ -1,7 +1,11 @@
 using CalmbinoArchive.Application.Extensions;
+using CalmbinoArchive.Application.Interfaces;
+using CalmbinoArchive.Application.Interfaces.Authentication;
 using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Extensions;
 using CalmbinoArchive.Infrastructure.Middlewares;
+using CalmbinoArchive.Infrastructure.Services;
+using CalmbinoArchive.Infrastructure.Services.Authentication;
 using CalmbinoArchive.ServiceDefaults;
 using Scalar.AspNetCore;
 using Serilog;
@@ -21,7 +25,7 @@ Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
 // });
 builder.Services.AddSerilog(Log.Logger);
 
-Log.Logger.Information("Application is building.....");
+Log.Information("Application is building.....");
 
 builder.Services.AddCors(options =>
 {
@@ -54,6 +58,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
+
+
 try
 {
     var app = builder.Build();
@@ -84,12 +92,12 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    Log.Logger.Information("Application is running.....");
+    Log.Information("Application is running.....");
     app.Run();
 }
 catch (Exception ex)
 {
-    Log.Logger.Error(ex, "Application failed to start.....");
+    Log.Error(ex, "Application failed to start.....");
 }
 finally
 {

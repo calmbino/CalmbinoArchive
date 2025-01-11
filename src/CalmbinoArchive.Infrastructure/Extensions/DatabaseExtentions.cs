@@ -24,7 +24,6 @@ public static class DatabaseExtentions
 
 
         builder.AddRedisClient("cache");
-        builder.Services.AddScoped<ICacheService, CacheService>();
 
         return builder;
     }

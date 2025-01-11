@@ -1,9 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using CalmbinoArchive.Application.Interfaces;
+using CalmbinoArchive.Application.Interfaces.Authentication;
 using CalmbinoArchive.Domain.Entities.Identity;
+using CalmbinoArchive.Infrastructure.Services.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -11,13 +14,16 @@ using StackExchange.Redis;
 
 namespace CalmbinoArchive.Api.Controllers;
 
+public record LoginResponse(string AccessToken, string RefreshToken);
+
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController(
     ILogger<AuthController> logger,
     SignInManager<User> signInManager,
     UserManager<User> userManager,
-    ICacheService cache
+    ICacheService cache,
+    ITokenService tokenService
 ) : ControllerBase
 {
     [HttpDelete("cacheDelete")]
@@ -25,12 +31,11 @@ public class AuthController(
     {
         // await cache.RemoveAsync("user_calmbino@gmail.com");
         await cache.RemoveByPrefixAsync("user");
-
         return true;
     }
 
     [HttpPost("login", Name = "User Login")]
-    public async Task<ActionResult<bool>> Login(LoginRequestDto dto)
+    public async Task<ActionResult<LoginResponse>> Login(LoginRequestDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -68,7 +73,10 @@ public class AuthController(
             logger.LogInformation("User Not Authenticated");
         }
 
-        return true;
+        var accessToken = await tokenService.GenerateAccessToken(selectedUser);
+        var refreshToken = tokenService.GenerateRefreshToken();
+
+        return new LoginResponse(accessToken, refreshToken);
     }
 }
 

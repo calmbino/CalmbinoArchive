@@ -20,7 +20,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\CalmbinoArchive.Api\CalmbinoArchive.Api.csproj"/>
-        <ProjectReference Include="..\..\src\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\src\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj" IsAspireProjectResource="false"/>
         <ProjectReference Include="..\..\src\CalmbinoArchive.MigrationService\CalmbinoArchive.MigrationService.csproj"/>
         <ProjectReference Include="..\..\src\CalmbinoArchive.Web\CalmbinoArchive.Web\CalmbinoArchive.Web.csproj"/>
     </ItemGroup>

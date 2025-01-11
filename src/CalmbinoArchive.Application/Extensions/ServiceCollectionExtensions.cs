@@ -1,3 +1,4 @@
+using CalmbinoArchive.Application.Interfaces.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CalmbinoArchive.Application.Extensions;
