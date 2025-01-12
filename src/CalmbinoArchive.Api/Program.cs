@@ -1,6 +1,7 @@
 using CalmbinoArchive.Application.Extensions;
 using CalmbinoArchive.Application.Interfaces;
 using CalmbinoArchive.Application.Interfaces.Authentication;
+using CalmbinoArchive.Domain.Contracts;
 using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Extensions;
 using CalmbinoArchive.Infrastructure.Middlewares;
@@ -12,6 +13,8 @@ using Serilog;
 using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 
 // TODO: move to infrastructure Layer
 Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()

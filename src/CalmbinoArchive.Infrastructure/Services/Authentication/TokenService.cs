@@ -8,6 +8,7 @@ using CalmbinoArchive.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CalmbinoArchive.Infrastructure.Services.Authentication;
@@ -22,23 +23,22 @@ public class TokenService
     private readonly ILogger<TokenService> _logger;
     private readonly UserManager<User> _userManager;
 
-    public TokenService(IConfiguration config, UserManager<User> userManager, ILogger<TokenService> logger)
+    public TokenService(IOptionsMonitor<JwtSettings> jwtSettings, UserManager<User> userManager,
+        ILogger<TokenService> logger)
     {
         _logger = logger;
         _userManager = userManager;
-        var jwtSettings = config.GetSection("JwtSettings")
-                                .Get<JwtSettings>();
 
-        if (jwtSettings == null || string.IsNullOrEmpty(jwtSettings.SecretKey))
+        if (jwtSettings == null || string.IsNullOrEmpty(jwtSettings.CurrentValue.SecretKey))
         {
             throw new InvalidOperationException("JWT secret key is not configured.");
         }
 
         _logger.LogInformation("JWT token settings loaded >>> {@jwtSettings}", jwtSettings);
 
-        _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey));
-        _issuer = jwtSettings.Issuer;
-        _audience = jwtSettings.Audience;
+        _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.CurrentValue.SecretKey));
+        _issuer = jwtSettings.CurrentValue.Issuer;
+        _audience = jwtSettings.CurrentValue.Audience;
         _expires = DateTime.Now.AddDays(1);
     }
 
