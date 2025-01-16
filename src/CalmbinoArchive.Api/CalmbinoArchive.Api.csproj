@@ -24,4 +24,8 @@
         <ProjectReference Include="..\CalmbinoArchive.Infrastructure\CalmbinoArchive.Infrastructure.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Extensions\"/>
+    </ItemGroup>
+
 </Project>

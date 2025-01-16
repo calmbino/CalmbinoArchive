@@ -1,20 +1,15 @@
-using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
+using AutoMapper;
+using CalmbinoArchive.Application.DTOs;
+using CalmbinoArchive.Application.Extensions;
 using CalmbinoArchive.Application.Interfaces;
 using CalmbinoArchive.Application.Interfaces.Authentication;
 using CalmbinoArchive.Domain.Entities.Identity;
-using CalmbinoArchive.Infrastructure.Services.Authentication;
+using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using StackExchange.Redis;
 
 namespace CalmbinoArchive.Api.Controllers;
-
-public record LoginResponse(string AccessToken, string RefreshToken);
 
 [ApiController]
 [Route("api/[controller]")]
@@ -23,65 +18,55 @@ public class AuthController(
     SignInManager<User> signInManager,
     UserManager<User> userManager,
     ICacheService cache,
-    ITokenService tokenService
+    ITokenService tokenService,
+    IValidator<LoginRequestDto> loginRequestDtoValidator,
+    IMapper mapper
 ) : ControllerBase
 {
-    [HttpDelete("cacheDelete")]
-    public async Task<ActionResult<bool>> CacheDelete()
-    {
-        // await cache.RemoveAsync("user_calmbino@gmail.com");
-        await cache.RemoveByPrefixAsync("user");
-        return true;
-    }
-
     [HttpPost("login", Name = "User Login")]
-    public async Task<ActionResult<LoginResponse>> Login(LoginRequestDto dto)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<Results<ProblemHttpResult, Ok<LoginResponseDto>>> Login(LoginRequestDto dto)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-
-        var cacheKey = $"user_{dto.Email}";
-        var cachedUser = await cache.GetAsync<User>(cacheKey);
-
-        if (cachedUser is null)
+        var validationResult = await loginRequestDtoValidator.ValidateAsync(dto);
+        if (!validationResult.IsValid)
         {
-            logger.LogInformation("Not logged in");
+            return TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest,
+                detail: "LoginRequestDto is invalid",
+                extensions: [validationResult.ToErrors()]);
         }
-        else
+
+        var cacheKey = $"{nameof(CachedUser)}:{dto.Email}";
+        var cachedUser = await cache.GetAsync<CachedUser>(cacheKey);
+
+        if (cachedUser != null)
         {
-            logger.LogInformation("Logged in");
+            return TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest,
+                detail: "Already logged in");
         }
 
         var selectedUser = await userManager.FindByEmailAsync(dto.Email);
 
-        await cache.SetAsync<User>(cacheKey, selectedUser, TimeSpan.FromMinutes(30));
-
-        var loginResult = await signInManager.PasswordSignInAsync(selectedUser, dto.Password, false, false);
-
-        logger.LogInformation("Login Result : {@loginResult}", loginResult);
-
-        if (HttpContext.User.Identity.IsAuthenticated)
+        if (selectedUser == null)
         {
-            logger.LogInformation("User Authenticated");
-            var name = HttpContext.User.Identity.Name;
-            var role = HttpContext.User.FindFirst(ClaimTypes.Role)
-                                  .Value;
-            logger.LogInformation("User name : {@name}", name);
-            logger.LogInformation("User role : {@role}", role);
+            return TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest,
+                detail: "Email or password is incorrect");
         }
-        else
+
+        var isCorrectPassword = await userManager.CheckPasswordAsync(selectedUser, dto.Password);
+        if (!isCorrectPassword)
         {
-            logger.LogInformation("User Not Authenticated");
+            return TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest,
+                detail: "Email or password is incorrect");
         }
 
         var accessToken = await tokenService.GenerateAccessToken(selectedUser);
         var refreshToken = tokenService.GenerateRefreshToken();
 
-        return new LoginResponse(accessToken, refreshToken);
-    }
-}
+        var newCachedUser = mapper.Map<CachedUser>(selectedUser);
+        newCachedUser.RefreshToken = refreshToken;
+        await cache.SetAsync(cacheKey, newCachedUser, TimeSpan.FromDays(30));
 
-public class LoginRequestDto
-{
-    [Required] public string Email { get; set; }
-    [Required] public string Password { get; set; }
+        return TypedResults.Ok(new LoginResponseDto(accessToken, refreshToken));
+    }
 }

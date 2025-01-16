@@ -6,8 +6,8 @@ var db = builder.AddPostgres("db", port: 5432)
                 .WithDataBindMount("../../docker/postgresql/data")
                 .AddDatabase("CalmbinoArchive");
 
-var cache = builder.AddGarnet("cache", port: 6379)
-                   .WithDataBindMount("../../docker/garnet/data")
+var cache = builder.AddRedis("cache", port: 6379)
+                   .WithDataBindMount("../../docker/redis/data")
                    .WithPersistence(TimeSpan.FromSeconds(10));
 
 var api = builder.AddProject<CalmbinoArchive_Api>("backend")
@@ -29,5 +29,5 @@ builder.AddProject<CalmbinoArchive_MigrationService>("migrations")
 //        .WaitFor(api)
 //        .WithExternalHttpEndpoints();
 
- builder.Build()
+builder.Build()
        .Run();

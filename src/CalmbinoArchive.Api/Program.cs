@@ -2,15 +2,12 @@ using CalmbinoArchive.Application.Extensions;
 using CalmbinoArchive.Application.Interfaces;
 using CalmbinoArchive.Application.Interfaces.Authentication;
 using CalmbinoArchive.Domain.Contracts;
-using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Extensions;
-using CalmbinoArchive.Infrastructure.Middlewares;
 using CalmbinoArchive.Infrastructure.Services;
 using CalmbinoArchive.Infrastructure.Services.Authentication;
 using CalmbinoArchive.ServiceDefaults;
 using Scalar.AspNetCore;
 using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +24,14 @@ Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
 //     configuration.WriteTo.File("../../logs/api_.txt", rollingInterval: RollingInterval.Day);
 // });
 builder.Services.AddSerilog(Log.Logger);
+
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = context =>
+    {
+        Log.Information("CustomizeProblemDetails 진입!!!!!!!!!!!!!!!!!!");
+    };
+});
 
 Log.Information("Application is building.....");
 
@@ -58,16 +63,19 @@ builder.Services.AddApplication()
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
 
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services
+       .AddScoped<ITokenService,
+           TokenService>(); // TODO: TokenService를 sigleton으로 사용하고 싶다면, UserManager에 대한 의존성을 없애야 한다.
 builder.Services.AddScoped<ICacheService, CacheService>();
 
 
 try
 {
     var app = builder.Build();
+
+    app.UseExceptionHandler();
+
     app.UseSerilogRequestLogging();
 
     // Configure aspire
@@ -81,12 +89,9 @@ try
         app.UseDeveloperExceptionPage();
     }
 
-    // app.UseExceptionHandler("/Error");
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
-
-    app.UseExceptionHandler();
 
     app.MapControllers();
 
