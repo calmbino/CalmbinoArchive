@@ -54,30 +54,42 @@ builder.Services.AddCors(options =>
 // Add aspire Services
 builder.AddServiceDefaults();
 
-// Add PostgreSQL
-builder.AddPostgreDatabase();
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddApplication()
-       .AddInfrastructure(builder.Configuration);
+
+#region Infrastructure Layer
+
+builder.AddPostgreSql();
+builder.AddRedis();
+builder.Services.AddAuthenticationServices(builder.Configuration);
+builder.Services.AddIdentityServices();
+
+#endregion
+
+#region Application Layer
+
+builder.Services.AddApplication();
+
+// TODO: TokenService를 sigleton으로 사용하고 싶다면, UserManager에 대한 의존성을 없애야 한다.
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
+
+#endregion
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
-
-builder.Services
-       .AddScoped<ITokenService,
-           TokenService>(); // TODO: TokenService를 sigleton으로 사용하고 싶다면, UserManager에 대한 의존성을 없애야 한다.
-builder.Services.AddScoped<ICacheService, CacheService>();
 
 
 try
 {
     var app = builder.Build();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+    #region Infrastructure Layer
+
+    app.UseAuthenticationServices();
+
+    #endregion
 
     app.UseExceptionHandler();
 

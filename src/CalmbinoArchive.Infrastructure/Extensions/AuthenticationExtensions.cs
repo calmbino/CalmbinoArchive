@@ -2,7 +2,9 @@ using System.Text;
 using CalmbinoArchive.Domain.Contracts;
 using CalmbinoArchive.Domain.Entities.Identity;
 using CalmbinoArchive.Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +12,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CalmbinoArchive.Infrastructure.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class AuthenticationExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthenticationServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection("JwtSettings")
                                        .Get<JwtSettings>();
@@ -51,13 +54,26 @@ public static class ServiceCollectionExtensions
                     };
                 });
 
+
+        return services;
+    }
+
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+    {
         services.AddIdentityCore<User>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
 
         services.AddIdentityApiEndpoints<User>();
 
-
         return services;
+    }
+
+    public static WebApplication UseAuthenticationServices(this WebApplication app)
+    {
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        return app;
     }
 }

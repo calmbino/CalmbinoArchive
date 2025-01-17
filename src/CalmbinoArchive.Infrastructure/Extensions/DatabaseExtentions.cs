@@ -13,7 +13,7 @@ namespace CalmbinoArchive.Infrastructure.Extensions;
 
 public static class DatabaseExtentions
 {
-    public static IHostApplicationBuilder? AddPostgreDatabase(this IHostApplicationBuilder builder)
+    public static IHostApplicationBuilder? AddPostgreSql(this IHostApplicationBuilder builder)
     {
         builder.AddNpgsqlDbContext<DataContext>("CalmbinoArchive",
             configureDbContextOptions: (options =>
@@ -23,6 +23,11 @@ public static class DatabaseExtentions
             }));
 
 
+        return builder;
+    }
+
+    public static IHostApplicationBuilder? AddRedis(this IHostApplicationBuilder builder)
+    {
         builder.AddRedisClient("cache");
 
         return builder;

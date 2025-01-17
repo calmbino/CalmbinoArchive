@@ -17,7 +17,7 @@ builder.Services.AddOpenTelemetry()
 builder.Services.AddIdentity<User, IdentityRole>()
        .AddEntityFrameworkStores<DataContext>();
 
-builder.AddPostgreDatabase();
+builder.AddPostgreSql();
 
 var host = builder.Build();
 host.Run();

@@ -16,8 +16,7 @@ builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
 builder.Services.AddWebShared(builder.Configuration)
-       .AddApplication()
-       .AddInfrastructure(builder.Configuration);
+       .AddApplication();
 
 
 var app = builder.Build();
