@@ -14,7 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 
 // TODO: move to infrastructure Layer
-Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+                                      // .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
+                                      .Enrich.FromLogContext()
                                       .WriteTo.Console()
                                       .WriteTo.File("../../logs/api_.txt", rollingInterval: RollingInterval.Day)
                                       .CreateLogger();
@@ -74,6 +76,9 @@ try
 {
     var app = builder.Build();
 
+    app.UseAuthentication();
+    app.UseAuthorization();
+
     app.UseExceptionHandler();
 
     app.UseSerilogRequestLogging();
@@ -91,14 +96,11 @@ try
 
     app.UseHttpsRedirection();
 
-    app.UseAuthorization();
 
     app.MapControllers();
 
     app.UseCors();
 
-    app.UseAuthentication();
-    app.UseAuthorization();
 
     Log.Information("Application is running.....");
     app.Run();

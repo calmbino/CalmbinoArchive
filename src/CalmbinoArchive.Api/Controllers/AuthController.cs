@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using CalmbinoArchive.Application.DTOs;
 using CalmbinoArchive.Application.Extensions;
@@ -5,6 +6,7 @@ using CalmbinoArchive.Application.Interfaces;
 using CalmbinoArchive.Application.Interfaces.Authentication;
 using CalmbinoArchive.Domain.Entities.Identity;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -63,10 +65,87 @@ public class AuthController(
         var accessToken = await tokenService.GenerateAccessToken(selectedUser);
         var refreshToken = tokenService.GenerateRefreshToken();
 
+        var expirationPeriod = TimeSpan.FromDays(30);
+        var expirationDate = DateTime.UtcNow.Add(expirationPeriod);
+
         var newCachedUser = mapper.Map<CachedUser>(selectedUser);
         newCachedUser.RefreshToken = refreshToken;
-        await cache.SetAsync(cacheKey, newCachedUser, TimeSpan.FromDays(30));
+        newCachedUser.ExpirationDate = expirationDate;
+        await cache.SetAsync(cacheKey, newCachedUser, expirationPeriod);
 
-        return TypedResults.Ok(new LoginResponseDto(accessToken, refreshToken));
+        // 쿠키 설정
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true, // JavaScript 접근 방지
+            Secure = true, // HTTPS에서만 전송
+            SameSite = SameSiteMode.Strict, // SameSite 정책 설정
+            Expires = expirationDate // 쿠키 만료 시간 설정
+        };
+        Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
+
+        return TypedResults.Ok(new LoginResponseDto(accessToken));
+    }
+
+    [Authorize]
+    [HttpPost("refresh-token", Name = "Refresh access token")]
+    public async Task<IResult> RefreshToken()
+    {
+        if (!Request.Cookies.TryGetValue("RefreshToken", out var refreshToken) || string.IsNullOrEmpty(refreshToken))
+        {
+            return TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest,
+                detail: "Refresh Token is missing or invalid.");
+        }
+
+
+        var email = User.FindFirst(ClaimTypes.Email)
+                        ?.Value;
+
+        var cacheKey = $"{nameof(CachedUser)}:{email}";
+        var cachedUser = await cache.GetAsync<CachedUser>(cacheKey);
+
+        if (cachedUser is null || cachedUser.RefreshToken != refreshToken)
+        {
+            return TypedResults.Problem(statusCode: StatusCodes.Status400BadRequest,
+                detail: "Can't refresh access token");
+        }
+
+        var utcNow = DateTime.UtcNow;
+        var sessionRemainingTime = cachedUser.ExpirationDate - utcNow;
+
+        logger.LogInformation("access token expiration >> {expiration}", cachedUser.ExpirationDate);
+        logger.LogInformation("datetime utc now >> {utcNow}", utcNow);
+        logger.LogInformation("session remaining time >> {sessionRemainingTime}", sessionRemainingTime);
+        logger.LogInformation("TimeSpan.FromDays(7) >> {time}", TimeSpan.FromDays(7));
+
+        string? newRefreshToken = null;
+        if (sessionRemainingTime <= TimeSpan.FromDays(7))
+        {
+            newRefreshToken = tokenService.GenerateRefreshToken();
+        }
+
+        var newAccessToken = await tokenService.GenerateAccessToken(cachedUser);
+
+        if (newRefreshToken is not null)
+        {
+            var expirationPeriod = TimeSpan.FromDays(30);
+            var expirationDate = DateTime.UtcNow.Add(expirationPeriod);
+
+            cachedUser.RefreshToken = newRefreshToken;
+            cachedUser.ExpirationDate = expirationDate;
+            await cache.SetAsync(cacheKey, cachedUser, expirationPeriod);
+
+            // 쿠키 설정
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true, // JavaScript 접근 방지
+                Secure = true, // HTTPS에서만 전송
+                SameSite = SameSiteMode.Strict, // SameSite 정책 설정
+                Expires = expirationDate // 쿠키 만료 시간 설정
+            };
+            Response.Cookies.Append("RefreshToken", newRefreshToken, cookieOptions);
+        }
+
+
+        return TypedResults.Ok(new LoginResponseDto() { AccessToken = newAccessToken });
     }
 }

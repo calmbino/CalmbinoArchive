@@ -6,7 +6,6 @@ using CalmbinoArchive.Application.Interfaces.Authentication;
 using CalmbinoArchive.Domain.Contracts;
 using CalmbinoArchive.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -34,12 +33,10 @@ public class TokenService
             throw new InvalidOperationException("JWT secret key is not configured.");
         }
 
-        _logger.LogInformation("JWT token settings loaded >>> {@jwtSettings}", jwtSettings);
-
         _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.CurrentValue.SecretKey));
         _issuer = jwtSettings.CurrentValue.Issuer;
         _audience = jwtSettings.CurrentValue.Audience;
-        _expires = DateTime.Now.AddDays(1);
+        _expires = DateTime.UtcNow.AddDays(1);
     }
 
     public async Task<string> GenerateAccessToken(User user)
@@ -47,7 +44,9 @@ public class TokenService
         var signingCredentials = new SigningCredentials(_secretKey, SecurityAlgorithms.HmacSha256);
         var claims = await GetClaimsAsync(user);
         var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
-        return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenOptions);
+        return tokenHandler.WriteToken(token);
     }
 
     public string GenerateRefreshToken()
@@ -70,14 +69,15 @@ public class TokenService
         return claims;
     }
 
-    private JwtSecurityToken GenerateTokenOptions(SigningCredentials credentials, List<Claim> claims)
+    private SecurityTokenDescriptor GenerateTokenOptions(SigningCredentials credentials, List<Claim> claims)
     {
-        return new JwtSecurityToken(
-            issuer: _issuer,
-            audience: _audience,
-            claims: claims,
-            expires: _expires,
-            signingCredentials: credentials
-        );
+        return new SecurityTokenDescriptor()
+        {
+            Issuer = _issuer,
+            Audience = _audience,
+            Subject = new ClaimsIdentity(claims),
+            Expires = _expires,
+            SigningCredentials = credentials
+        };
     }
 }

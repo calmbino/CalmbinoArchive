@@ -5,4 +5,5 @@ namespace CalmbinoArchive.Application.DTOs;
 public class CachedUser : User
 {
     public string RefreshToken { get; set; }
+    public DateTime ExpirationDate { get; set; }
 }
