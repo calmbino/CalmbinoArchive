@@ -11,11 +11,11 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+
 var baseDirectory = AppContext.BaseDirectory;
 var projectRoot = baseDirectory.Split("src")[0];
 var logsPath = Path.Combine(projectRoot, "logs");
-
-builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 
 // TODO: move to infrastructure Layer
 Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
@@ -30,6 +30,7 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
 //     configuration.WriteTo.Console();
 //     configuration.WriteTo.File("../../logs/api_.txt", rollingInterval: RollingInterval.Day);
 // });
+
 builder.Services.AddSerilog(Log.Logger);
 
 builder.Services.AddProblemDetails(options =>

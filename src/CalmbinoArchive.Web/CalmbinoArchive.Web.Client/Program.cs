@@ -1,10 +1,5 @@
-using System.Net;
-using System.Text.Json;
 using CalmbinoArchive.Web.Shared.Extensions;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.ServiceDiscovery;
-using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

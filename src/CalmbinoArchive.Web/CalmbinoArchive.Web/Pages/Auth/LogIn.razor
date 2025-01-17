@@ -1,0 +1,21 @@
+@page "/LogIn"
+@rendermode InteractiveServer
+
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh">
+    <MudCard Class="pa-5" Style="width: 40%">
+        <MudCardContent Style="margin-bottom: 40px">
+            <MudForm Spacing="8">
+                <MudTextField  @bind-Value="email" Label="Email"/>
+                <MudTextField @bind-Value="password" Label="Password" InputType="InputType.Password"/>
+            </MudForm>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Log in</MudButton>
+        </MudCardActions>
+    </MudCard>
+</div>
+
+@code {
+    string email = default;
+    string password = default;
+}
