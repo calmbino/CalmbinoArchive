@@ -11,6 +11,10 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var baseDirectory = AppContext.BaseDirectory;
+var projectRoot = baseDirectory.Split("src")[0];
+var logsPath = Path.Combine(projectRoot, "logs");
+
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 
 // TODO: move to infrastructure Layer
@@ -18,7 +22,8 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
                                       // .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
                                       .Enrich.FromLogContext()
                                       .WriteTo.Console()
-                                      .WriteTo.File("../../logs/api_.txt", rollingInterval: RollingInterval.Day)
+                                      .WriteTo.File($"{logsPath}/api_.txt",
+                                          rollingInterval: RollingInterval.Day)
                                       .CreateLogger();
 // builder.Host.UseSerilog((context, configuration) =>
 // {

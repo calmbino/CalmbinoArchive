@@ -5,8 +5,23 @@ using CalmbinoArchive.Web.Client.Pages;
 using CalmbinoArchive.Web.Components;
 using CalmbinoArchive.Web.Shared.Extensions;
 using MudBlazor.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var baseDirectory = AppContext.BaseDirectory;
+var projectRoot = baseDirectory.Split("src")[0];
+var logsPath = Path.Combine(projectRoot, "logs");
+
+// TODO: move to infrastructure Layer
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+                                      // .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
+                                      .Enrich.FromLogContext()
+                                      .WriteTo.Console()
+                                      .WriteTo.File($"{logsPath}/blazor_.txt", rollingInterval: RollingInterval.Day)
+                                      .CreateLogger();
+
+builder.Services.AddSerilog(Log.Logger);
 
 // Add aspire services
 builder.AddServiceDefaults();
@@ -15,6 +30,7 @@ builder.AddServiceDefaults();
 builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddWebShared(builder.Configuration)
        .AddApplication();
 
