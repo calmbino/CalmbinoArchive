@@ -1,21 +1,56 @@
+@using CalmbinoArchive.Application.DTOs
+@using CalmbinoArchive.Application.DTOs.Validators
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Options
+@using Serilog
 @page "/LogIn"
 @rendermode InteractiveServer
 
+<MudSnackbarProvider/>
 <div style="display: flex; justify-content: center; align-items: center; height: 80vh">
     <MudCard Class="pa-5" Style="width: 40%">
         <MudCardContent Style="margin-bottom: 40px">
-            <MudForm Spacing="8">
-                <MudTextField  @bind-Value="email" Label="Email"/>
-                <MudTextField @bind-Value="password" Label="Password" InputType="InputType.Password"/>
+            <MudForm Spacing="8" Model="@_model" @ref="@_form" Validation="@(_validator.ValidateValue)"
+                     ValidationDelay="0">
+                <MudTextField @bind-Value="_model.Email" For="@(() => _model.Email)" Immediate="true" Label="Email"/>
+                <MudTextField @bind-Value="_model.Password" For="@(() => _model.Password)" Immediate="true"
+                              Label="Password" InputType="InputType.Password"/>
             </MudForm>
         </MudCardContent>
         <MudCardActions>
-            <MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Log in</MudButton>
+            <MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary"
+                       OnClick="@(async () => await Submit())">Log in
+            </MudButton>
         </MudCardActions>
     </MudCard>
 </div>
 
 @code {
-    string email = default;
-    string password = default;
+    [Inject] ISnackbar? Snackbar { get; set; }
+    [Inject] IOptions<IdentityOptions>? PasswordOptions { get; set; }
+
+    private MudForm? _form;
+    private readonly LoginRequestDto _model = new LoginRequestDto();
+    private LoginRequestDtoValidator _validator = null!;
+
+    private async Task Submit()
+    {
+        await _form!.Validate();
+
+        Log.Information("_form Model >>> {@Model}", _form.Model);
+        Log.Information("_form Errors >>> {@Errors}", _form.Errors);
+
+
+        if (_form.IsValid)
+        {
+            Snackbar!.Add("Submitted!");
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        Log.Information("PasswordOptions >>>> {@PasswordOptions}", PasswordOptions);
+        _validator = new LoginRequestDtoValidator(PasswordOptions!);
+    }
+
 }

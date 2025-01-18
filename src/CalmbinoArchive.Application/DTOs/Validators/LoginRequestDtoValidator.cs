@@ -7,7 +7,7 @@ namespace CalmbinoArchive.Application.DTOs.Validators;
 
 public class LoginRequestDtoValidator : AbstractValidator<LoginRequestDto>
 {
-    public LoginRequestDtoValidator(IOptions<IdentityOptions> identityOptions, ILogger<LoginRequestDtoValidator> logger)
+    public LoginRequestDtoValidator(IOptions<IdentityOptions> identityOptions)
     {
         RuleFor(x => x.Email)
             .NotEmpty()
@@ -16,7 +16,6 @@ public class LoginRequestDtoValidator : AbstractValidator<LoginRequestDto>
             .WithMessage("Invalid email format");
 
         var passwordOptions = identityOptions.Value.Password;
-        logger.LogInformation("Password valid coditions >> {@PasswordOptions}", passwordOptions);
 
         RuleFor(x => x.Password)
             .NotEmpty()
@@ -57,4 +56,14 @@ public class LoginRequestDtoValidator : AbstractValidator<LoginRequestDto>
                                       .Count() >= passwordOptions.RequiredUniqueChars)
             .WithMessage($"Password must have at least {passwordOptions.RequiredUniqueChars} unique characters.");
     }
+
+    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+    {
+        var result =
+            await ValidateAsync(ValidationContext<LoginRequestDto>.CreateWithOptions((LoginRequestDto)model,
+                x => x.IncludeProperties(propertyName)));
+        if (result.IsValid)
+            return Array.Empty<string>();
+        return result.Errors.Select(e => e.ErrorMessage);
+    };
 }

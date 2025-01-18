@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddAutoMapper(typeof(MappingConfig));
 
-        services.AddValidatorsFromAssemblyContaining<LoginRequestDtoValidator>();
+        services.AddValidatorsFromAssemblyContaining<LoginRequestDtoValidator>(includeInternalTypes: true);
 
         return services;
     }
