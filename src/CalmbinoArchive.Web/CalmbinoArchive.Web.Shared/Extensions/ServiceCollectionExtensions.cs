@@ -1,3 +1,4 @@
+using System.Net;
 using CalmbinoArchive.Web.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,9 @@ public static class ServiceCollectionExtensions
         // - blazor server에서는 문제없음
         // - blazor client(webassembly)에서는 별도로 service discovery를 설정해줘야 함
         services.AddScoped<WeatherClientService>();
+        services.AddScoped<AuthClientService>();
         services.AddHttpClient<WeatherClientService>(static client => client.BaseAddress = new("https+http://backend"));
+        services.AddHttpClient<AuthClientService>(static client => client.BaseAddress = new("https+http://backend"));
 
 
         return services;

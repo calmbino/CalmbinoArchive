@@ -248,6 +248,11 @@
         <_ContentIncludedByDefault Remove="Components\Editors\Editor.razor"/>
         <_ContentIncludedByDefault Remove="Pages\Posts\PostDetail.razor"/>
         <_ContentIncludedByDefault Remove="Pages\Posts\PostEditor.razor"/>
+        <_ContentIncludedByDefault Remove="Pages\Auth\LogIn.razor"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Pages\Auth\LogIn.razor"/>
     </ItemGroup>
 
 </Project>

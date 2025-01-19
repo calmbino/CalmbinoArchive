@@ -4,6 +4,7 @@ using CalmbinoArchive.ServiceDefaults;
 using CalmbinoArchive.Web.Client.Pages;
 using CalmbinoArchive.Web.Components;
 using CalmbinoArchive.Web.Shared.Extensions;
+using Microsoft.AspNetCore.CookiePolicy;
 using MudBlazor.Services;
 using Serilog;
 
@@ -31,6 +32,8 @@ builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddWebShared(builder.Configuration)
        .AddApplication();
 
@@ -53,7 +56,6 @@ else
 }
 
 app.UseHttpsRedirection();
-
 
 app.UseAntiforgery();
 

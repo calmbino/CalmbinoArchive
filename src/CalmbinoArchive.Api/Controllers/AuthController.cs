@@ -78,7 +78,7 @@ public class AuthController(
         {
             HttpOnly = true, // JavaScript 접근 방지
             Secure = true, // HTTPS에서만 전송
-            SameSite = SameSiteMode.Strict, // SameSite 정책 설정
+            SameSite = SameSiteMode.None, // SameSite 정책 설정
             Expires = expirationDate // 쿠키 만료 시간 설정
         };
         Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);

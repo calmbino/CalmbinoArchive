@@ -22,12 +22,12 @@ var api = builder.AddProject<CalmbinoArchive_Api>("backend")
 builder.AddProject<CalmbinoArchive_MigrationService>("migrations")
        .WithReference(db);
 
-// builder.AddProject<CalmbinoArchive_Web>("frontend")
-//        .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
-//        .WithEndpoint("https", endpoint => endpoint.IsProxied = false)
-//        .WithReference(api)
-//        .WaitFor(api)
-//        .WithExternalHttpEndpoints();
+builder.AddProject<CalmbinoArchive_Web>("frontend")
+       .WithEndpoint("http", endpoint => endpoint.IsProxied = false)
+       .WithEndpoint("https", endpoint => endpoint.IsProxied = false)
+       .WithReference(api)
+       .WaitFor(api)
+       .WithExternalHttpEndpoints();
 
 builder.Build()
        .Run();

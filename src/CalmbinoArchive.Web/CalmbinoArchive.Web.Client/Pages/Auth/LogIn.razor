@@ -4,11 +4,11 @@
 @using CalmbinoArchive.Web.Shared.Services
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.Extensions.Options
-@using Serilog
-@page "/LogIn/server"
-@rendermode InteractiveServer
+@page "/LogIn/client"
+@rendermode InteractiveWebAssembly
 @inject AuthClientService AuthClientService
-@inject IHttpContextAccessor HttpContextAccessor
+
+
 <MudSnackbarProvider/>
 <div style="display: flex; justify-content: center; align-items: center; height: 80vh">
     <MudCard Class="pa-5" Style="width: 40%">
@@ -35,7 +35,6 @@
     private MudForm? _form;
     private readonly LoginRequestDto _model = new LoginRequestDto();
     private LoginRequestDtoValidator _validator = null!;
-    private HttpContext? _httpContext;
 
     private async Task Submit()
     {
@@ -50,19 +49,17 @@
             Log.Information("LoginRequestDto >>> {@LoginRequestDto}", _model);
             var response = await AuthClientService.LoginAsync(_model);
             Log.Information("Response >>> {@response}", response);
-            Log.Information("Response Headers >>> {@headers}", response.Headers);
+
             if (response.IsSuccessStatusCode)
             {
-                var cookies = response.Headers.GetValues("Set-Cookie");
-
                 var body = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
                 Log.Information("Response Body >>> {@body}", body);
-                Log.Information("Response cookies >>> {@cookies}", cookies);
             }
             else
             {
                 var body = await response.Content.ReadFromJsonAsync<ProblemDetails>();
                 Log.Information("Response Body >>> {@body}", body);
+                Log.Information("ProblemDetails Extensions >>> {@extenstions}", body.Extensions);
             }
         }
     }
@@ -71,8 +68,6 @@
     {
         // Log.Information("PasswordOptions >>>> {@PasswordOptions}", PasswordOptions);
         _validator = new LoginRequestDtoValidator(PasswordOptions!);
-
-        _httpContext = HttpContextAccessor.HttpContext;
     }
 
 }
