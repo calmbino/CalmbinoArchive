@@ -1,6 +1,7 @@
 using CalmbinoArchive.Web.Shared.Extensions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Serilog;
+using Solutaris.InfoWARE.ProtectedBrowserStorage.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -16,6 +17,8 @@ builder.Services.ConfigureHttpClientDefaults(http => { http.AddServiceDiscovery(
 
 // Add services to the container.
 builder.Services.AddWebShared(builder.Configuration);
+
+builder.Services.AddIWProtectedBrowserStorageAsSingleton();
 
 await builder.Build()
              .RunAsync();

@@ -4,10 +4,12 @@
 @using CalmbinoArchive.Web.Shared.Services
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.Extensions.Options
+@using Solutaris.InfoWARE.ProtectedBrowserStorage.Services
+
 @page "/LogIn/client"
 @rendermode InteractiveWebAssembly
 @inject AuthClientService AuthClientService
-
+@inject IIWLocalStorageService LocalStorage
 
 <MudSnackbarProvider/>
 <div style="display: flex; justify-content: center; align-items: center; height: 80vh">
@@ -54,6 +56,7 @@
             {
                 var body = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
                 Log.Information("Response Body >>> {@body}", body);
+                await LocalStorage.SetItemAsync("AceessToken", body.AccessToken);
             }
             else
             {

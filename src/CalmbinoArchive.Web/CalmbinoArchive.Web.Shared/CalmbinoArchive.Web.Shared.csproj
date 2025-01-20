@@ -20,6 +20,7 @@
         <PackageReference Include="MudBlazor" Version="8.0.0-preview.5"/>
         <PackageReference Include="PSC.Blazor.Components.MarkdownEditor" Version="8.0.5"/>
         <PackageReference Include="Slugity" Version="1.0.4"/>
+        <PackageReference Include="Solutaris.InfoWARE.ProtectedBrowserStorage" Version="1.0.2"/>
     </ItemGroup>
 
     <ItemGroup>

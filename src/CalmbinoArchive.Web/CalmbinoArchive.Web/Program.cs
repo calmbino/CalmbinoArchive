@@ -7,6 +7,7 @@ using CalmbinoArchive.Web.Shared.Extensions;
 using Microsoft.AspNetCore.CookiePolicy;
 using MudBlazor.Services;
 using Serilog;
+using Solutaris.InfoWARE.ProtectedBrowserStorage.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddWebShared(builder.Configuration)
        .AddApplication();
 
+builder.Services.AddIWProtectedBrowserStorage();
 
 var app = builder.Build();
 
