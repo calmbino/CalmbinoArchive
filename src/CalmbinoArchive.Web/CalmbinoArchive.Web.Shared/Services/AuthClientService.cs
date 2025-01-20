@@ -5,8 +5,8 @@ namespace CalmbinoArchive.Web.Shared.Services;
 
 public class AuthClientService(HttpClient httpClient)
 {
-    public async Task<HttpResponseMessage> LoginAsync(LoginRequestDto dto)
+    public Task<HttpResponseMessage> LoginAsync(LoginRequestDto dto)
     {
-        return await httpClient.PostAsJsonAsync<LoginRequestDto>("/api/auth/login", dto);
+        return httpClient.PostAsJsonAsync("/api/auth/login", dto);
     }
 }

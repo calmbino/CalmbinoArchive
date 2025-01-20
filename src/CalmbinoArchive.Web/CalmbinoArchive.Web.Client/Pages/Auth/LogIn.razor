@@ -39,34 +39,34 @@
     private async Task Submit()
     {
         await _form!.Validate();
-
-        Log.Information("_form Model >>> {@Model}", _form.Model);
-        Log.Information("_form Errors >>> {@Errors}", _form.Errors);
+        
+        Console.WriteLine($"_form Model >>> {_form.Model}");
+        Console.WriteLine($"_form Errors >>> {_form.Errors}");
 
 
         if (_form.IsValid)
         {
-            Log.Information("LoginRequestDto >>> {@LoginRequestDto}", _model);
+            Console.WriteLine($"LoginRequestDto >>> {_model}");
             var response = await AuthClientService.LoginAsync(_model);
-            Log.Information("Response >>> {@response}", response);
+            Console.WriteLine($"Response >>> {response}");
 
             if (response.IsSuccessStatusCode)
             {
                 var body = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
-                Log.Information("Response Body >>> {@body}", body);
+                Console.WriteLine($"Response Body >>> {body}");
             }
             else
             {
                 var body = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                Log.Information("Response Body >>> {@body}", body);
-                Log.Information("ProblemDetails Extensions >>> {@extenstions}", body.Extensions);
+                Console.WriteLine($"Response Body >>> {body}");
+                Console.WriteLine($"ProblemDetails Extensions >>> {body.Extensions}");
             }
         }
     }
 
     protected override void OnInitialized()
     {
-        // Log.Information("PasswordOptions >>>> {@PasswordOptions}", PasswordOptions);
+        // Console.WriteLine($"PasswordOptions >>>> {PasswordOptions}");
         _validator = new LoginRequestDtoValidator(PasswordOptions!);
     }
 

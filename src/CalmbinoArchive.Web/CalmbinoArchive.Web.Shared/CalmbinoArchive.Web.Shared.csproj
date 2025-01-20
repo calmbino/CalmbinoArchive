@@ -15,6 +15,7 @@
         <PackageReference Include="Markdig" Version="0.38.0"/>
         <PackageReference Include="Markdown.ColorCode" Version="2.3.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0"/>
         <PackageReference Include="MudBlazor" Version="8.0.0-preview.5"/>
         <PackageReference Include="PSC.Blazor.Components.MarkdownEditor" Version="8.0.5"/>

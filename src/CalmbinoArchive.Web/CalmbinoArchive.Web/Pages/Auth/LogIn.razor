@@ -8,7 +8,7 @@
 @page "/LogIn/server"
 @rendermode InteractiveServer
 @inject AuthClientService AuthClientService
-@inject IHttpContextAccessor HttpContextAccessor
+
 <MudSnackbarProvider/>
 <div style="display: flex; justify-content: center; align-items: center; height: 80vh">
     <MudCard Class="pa-5" Style="width: 40%">
@@ -35,7 +35,6 @@
     private MudForm? _form;
     private readonly LoginRequestDto _model = new LoginRequestDto();
     private LoginRequestDtoValidator _validator = null!;
-    private HttpContext? _httpContext;
 
     private async Task Submit()
     {
@@ -71,8 +70,6 @@
     {
         // Log.Information("PasswordOptions >>>> {@PasswordOptions}", PasswordOptions);
         _validator = new LoginRequestDtoValidator(PasswordOptions!);
-
-        _httpContext = HttpContextAccessor.HttpContext;
     }
 
 }
