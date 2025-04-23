@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {PageProps} from './$types';
-  import PostCard from "$lib/components/PostCard.svelte";
+  import PostCard from "./components/PostCard.svelte";
 
   let {data}: PageProps = $props();
 </script>

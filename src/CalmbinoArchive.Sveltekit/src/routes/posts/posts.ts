@@ -1,4 +1,4 @@
-import type { Post } from '$lib/types/post';
+import type { Post } from './types/post';
 
 export const posts: Post[] = [
 	{
