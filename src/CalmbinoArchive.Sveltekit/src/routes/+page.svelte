@@ -9,6 +9,9 @@
 		date: new Date(Date.now() - i * 86400000).toLocaleDateString('ko-KR')
 	}));
 
+	// 참조용 변수
+	let observerTarget: HTMLElement | null = $state(null);
+
 	// 반응형 상태 정의
 	let currentPage = $state(1);
 	const itemsPerPage = 5;
@@ -23,8 +26,6 @@
 			visibleArticles.length < allArticles.length
 	);
 
-	// 참조용 변수
-	let observerTarget: HTMLElement | null = null;
 
 	// 더 많은 게시물 로드 함수
 	function loadMore() {
@@ -89,7 +90,7 @@
 			{#if hasMoreArticles}
 				<div class="flex justify-center p-4">
 					<button
-							on:click={loadMore}
+							onclick={loadMore}
 							class="btn variant-soft-primary"
 							disabled={loading}
 					>
